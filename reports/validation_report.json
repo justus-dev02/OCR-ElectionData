@@ -1,0 +1,640 @@
+{
+  "documents": [
+    {
+      "document": "010_2611_49001.pdf",
+      "run_id": "run_20261012T160712Z_62cf60",
+      "profile": "bw_btw1949_gemeinden",
+      "pages": 80,
+      "page_errors": 0,
+      "tables": 80,
+      "tables_without_rows": 1,
+      "numeric_cells": {
+        "AGREED": 29670,
+        "DISAGREED": 4793,
+        "SINGLE_SOURCE": 90
+      },
+      "rows": 3425,
+      "tiers": {
+        "reference_only": 0,
+        "data_verified": 638,
+        "needs_review": 2787
+      },
+      "section_totals": 63,
+      "section_totals_verified": 0,
+      "section_totals_mismatch": 8,
+      "top_blockers": {
+        "HIERARCHY_UNVERIFIED": 3425,
+        "OCR_ENGINE_DISAGREEMENT": 2429,
+        "ARITHMETIC_CHECK_NOT_EXECUTABLE": 2276,
+        "HEADER_UNRESOLVED": 628,
+        "SECTION_CONTEXT_MISSING": 197,
+        "SECTION_LABEL_UNRESOLVED": 197,
+        "HIERARCHICAL_SUM_MISMATCH": 150,
+        "TOKEN_UNASSIGNED": 129
+      },
+      "external": [],
+      "agreed_share": 0.8587
+    },
+    {
+      "document": "011_2611_53001.pdf",
+      "run_id": "run_20261012T161555Z_75b5d5",
+      "profile": "bw_btw1953_gemeinden",
+      "pages": 82,
+      "page_errors": 0,
+      "tables": 164,
+      "tables_without_rows": 84,
+      "numeric_cells": {
+        "AGREED": 82518,
+        "DISAGREED": 5601,
+        "NO_READING": 124,
+        "SINGLE_SOURCE": 251
+      },
+      "rows": 6944,
+      "tiers": {
+        "reference_only": 4,
+        "data_verified": 3102,
+        "needs_review": 3838
+      },
+      "section_totals": 136,
+      "section_totals_verified": 0,
+      "section_totals_mismatch": 4,
+      "top_blockers": {
+        "HIERARCHY_UNVERIFIED": 6924,
+        "ARITHMETIC_CHECK_NOT_EXECUTABLE": 3418,
+        "OCR_ENGINE_DISAGREEMENT": 3337,
+        "INDEX_MISMATCH": 372,
+        "TOKEN_UNASSIGNED": 180,
+        "HEADER_UNRESOLVED": 178,
+        "HIERARCHICAL_SUM_MISMATCH": 168,
+        "MISSING_VALUE": 98
+      },
+      "external": [],
+      "agreed_share": 0.9325
+    },
+    {
+      "document": "043_2611_57001.pdf",
+      "run_id": "run_20261012T162720Z_bc52b7",
+      "profile": "bw_btw1957_gemeinden",
+      "pages": 81,
+      "page_errors": 0,
+      "tables": 162,
+      "tables_without_rows": 81,
+      "numeric_cells": {
+        "AGREED": 78592,
+        "DISAGREED": 6424,
+        "NO_READING": 2,
+        "SINGLE_SOURCE": 413
+      },
+      "rows": 6976,
+      "tiers": {
+        "reference_only": 5,
+        "data_verified": 2714,
+        "needs_review": 4257
+      },
+      "section_totals": 130,
+      "section_totals_verified": 0,
+      "section_totals_mismatch": 0,
+      "top_blockers": {
+        "HIERARCHY_UNVERIFIED": 6958,
+        "ARITHMETIC_CHECK_NOT_EXECUTABLE": 3932,
+        "OCR_ENGINE_DISAGREEMENT": 3670,
+        "INDEX_MISMATCH": 504,
+        "MISSING_VALUE": 370,
+        "PAGE_STITCH_MISMATCH": 362,
+        "HEADER_UNRESOLVED": 274,
+        "OCR_SINGLE_SOURCE": 152
+      },
+      "external": [],
+      "agreed_share": 0.9199
+    },
+    {
+      "document": "080_2611_61001.pdf",
+      "run_id": "run_20261012T163754Z_5e5ac9",
+      "profile": "bw_btw1961_gemeinden",
+      "pages": 102,
+      "page_errors": 0,
+      "tables": 103,
+      "tables_without_rows": 3,
+      "numeric_cells": {
+        "AGREED": 64469,
+        "DISAGREED": 8848,
+        "NO_READING": 5,
+        "SINGLE_SOURCE": 265
+      },
+      "rows": 6864,
+      "tiers": {
+        "reference_only": 0,
+        "data_verified": 1296,
+        "needs_review": 5568
+      },
+      "section_totals": 110,
+      "section_totals_verified": 0,
+      "section_totals_mismatch": 31,
+      "top_blockers": {
+        "HIERARCHY_UNVERIFIED": 6842,
+        "OCR_ENGINE_DISAGREEMENT": 4856,
+        "ARITHMETIC_CHECK_NOT_EXECUTABLE": 4349,
+        "SECTION_LABEL_UNRESOLVED": 1434,
+        "SECTION_CONTEXT_MISSING": 1388,
+        "HIERARCHICAL_SUM_MISMATCH": 543,
+        "ROW_GROUP_INVALID": 306,
+        "OCR_SINGLE_SOURCE": 287
+      },
+      "external": [],
+      "agreed_share": 0.8761
+    },
+    {
+      "document": "121_2611_65001.pdf",
+      "run_id": "run_20261012T164816Z_740ea8",
+      "profile": "bw_btw1965_gemeinden",
+      "pages": 276,
+      "page_errors": 0,
+      "tables": 281,
+      "tables_without_rows": 56,
+      "numeric_cells": {
+        "AGREED": 78854,
+        "DISAGREED": 16235,
+        "NO_READING": 2,
+        "SINGLE_SOURCE": 717
+      },
+      "rows": 5640,
+      "tiers": {
+        "reference_only": 1,
+        "data_verified": 298,
+        "needs_review": 5341
+      },
+      "section_totals": 108,
+      "section_totals_verified": 0,
+      "section_totals_mismatch": 83,
+      "top_blockers": {
+        "HIERARCHY_UNVERIFIED": 5632,
+        "PERCENT_CHECK_NOT_EXECUTABLE": 5016,
+        "OCR_ENGINE_DISAGREEMENT": 4311,
+        "ARITHMETIC_CHECK_NOT_EXECUTABLE": 4104,
+        "MISSING_VALUE": 3401,
+        "INDEX_MISMATCH": 562,
+        "HIERARCHICAL_SUM_MISMATCH": 550,
+        "SECTION_CONTEXT_MISSING": 436
+      },
+      "external": [],
+      "agreed_share": 0.823
+    },
+    {
+      "document": "166_2611_69001.pdf",
+      "run_id": "run_20261012T172112Z_46b752",
+      "profile": "bw_btw1969_gemeinden",
+      "pages": 258,
+      "page_errors": 0,
+      "tables": 263,
+      "tables_without_rows": 24,
+      "numeric_cells": {
+        "AGREED": 72440,
+        "DISAGREED": 33746,
+        "NO_READING": 1,
+        "SINGLE_SOURCE": 1683
+      },
+      "rows": 6424,
+      "tiers": {
+        "reference_only": 0,
+        "data_verified": 66,
+        "needs_review": 6358
+      },
+      "section_totals": 106,
+      "section_totals_verified": 0,
+      "section_totals_mismatch": 76,
+      "top_blockers": {
+        "HIERARCHY_UNVERIFIED": 6412,
+        "PERCENT_CHECK_NOT_EXECUTABLE": 6163,
+        "OCR_ENGINE_DISAGREEMENT": 5657,
+        "ARITHMETIC_CHECK_NOT_EXECUTABLE": 5506,
+        "MISSING_VALUE": 4833,
+        "SECTION_CONTEXT_MISSING": 3502,
+        "SECTION_LABEL_UNRESOLVED": 3494,
+        "INDEX_MISMATCH": 1848
+      },
+      "external": [],
+      "agreed_share": 0.6715
+    },
+    {
+      "document": "Hessen_Bundestagswahl_Statistik1953.pdf",
+      "run_id": "run_20261012T174505Z_4ef8dc",
+      "profile": "hessen_btw1953_gemeinden",
+      "pages": 128,
+      "page_errors": 0,
+      "tables": 128,
+      "tables_without_rows": 18,
+      "numeric_cells": {
+        "AGREED": 71984,
+        "DISAGREED": 5981,
+        "NO_READING": 3,
+        "SINGLE_SOURCE": 476
+      },
+      "rows": 4674,
+      "tiers": {
+        "reference_only": 0,
+        "data_verified": 767,
+        "needs_review": 3907
+      },
+      "section_totals": 26,
+      "section_totals_verified": 0,
+      "section_totals_mismatch": 5,
+      "top_blockers": {
+        "HIERARCHY_UNVERIFIED": 4668,
+        "SECTION_LABEL_UNRESOLVED": 2558,
+        "SECTION_CONTEXT_MISSING": 2368,
+        "ARITHMETIC_CHECK_NOT_EXECUTABLE": 2318,
+        "OCR_ENGINE_DISAGREEMENT": 2166,
+        "ROW_GROUP_INVALID": 762,
+        "COLUMN_COUNT_MISMATCH": 614,
+        "HEADER_UNRESOLVED": 346
+      },
+      "external": [
+        {
+          "source": "Hessen 1953 municipalities, all machine-agreed cells",
+          "rows_considered": 4642,
+          "rows_matched": 1766,
+          "rows_ambiguous": 0,
+          "rows_unmatched": 2876,
+          "cells_compared": 18027,
+          "cells_equal": 18001,
+          "per_field": {
+            "eligible_voters": {
+              "compared": 1657,
+              "equal": 1657
+            },
+            "invalid_votes": {
+              "compared": 1640,
+              "equal": 1637
+            },
+            "party:cdu": {
+              "compared": 1667,
+              "equal": 1666
+            },
+            "party:dp": {
+              "compared": 1613,
+              "equal": 1608
+            },
+            "party:fdp": {
+              "compared": 1651,
+              "equal": 1650
+            },
+            "party:gb_bhe": {
+              "compared": 1640,
+              "equal": 1635
+            },
+            "party:gvp": {
+              "compared": 1611,
+              "equal": 1609
+            },
+            "party:kpd": {
+              "compared": 1630,
+              "equal": 1626
+            },
+            "party:sonstige": {
+              "compared": 1600,
+              "equal": 1600
+            },
+            "party:spd": {
+              "compared": 1663,
+              "equal": 1661
+            },
+            "valid_votes": {
+              "compared": 1655,
+              "equal": 1652
+            }
+          },
+          "mismatches": [
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0062_t0_g006_1",
+              "page": 62,
+              "unit": "Urberach",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:dp",
+              "pipeline": "3",
+              "official": 5,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0062_t0_c11_l018"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0063_t0_g015_1",
+              "page": 63,
+              "unit": "Fürstengrund",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:gb_bhe",
+              "pipeline": "7",
+              "official": 10,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0063_t0_c09_l045"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0069_t0_g015_1",
+              "page": 69,
+              "unit": "Staden",
+              "vote_type": "ERSTSTIMME",
+              "field": "invalid_votes",
+              "pipeline": "19",
+              "official": 10,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0069_t0_c03_l045"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0070_t0_g001_1",
+              "page": 70,
+              "unit": "Allendorf a. d. Lahn",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:kpd",
+              "pipeline": "10",
+              "official": 16,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0070_t0_c08_l003"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0070_t0_g003_1",
+              "page": 70,
+              "unit": "Allertshausen",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:gb_bhe",
+              "pipeline": "1",
+              "official": 10,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0070_t0_c09_l009"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0071_t0_g009_2",
+              "page": 71,
+              "unit": "Grüningen",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:gvp",
+              "pipeline": "3",
+              "official": 8,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0071_t0_c10_l028"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0071_t0_g012_2",
+              "page": 71,
+              "unit": "Hausen",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:dp",
+              "pipeline": "3",
+              "official": 8,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0071_t0_c11_l037"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0071_t0_g013_1",
+              "page": 71,
+              "unit": "Heuchelheim",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:kpd",
+              "pipeline": "5",
+              "official": 50,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0071_t0_c08_l039"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0071_t0_g013_2",
+              "page": 71,
+              "unit": "Heuchelheim",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:gb_bhe",
+              "pipeline": "245",
+              "official": 246,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0071_t0_c09_l040"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0071_t0_g016_2",
+              "page": 71,
+              "unit": "Kesselbach",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:fdp",
+              "pipeline": "7",
+              "official": 72,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0071_t0_c06_l051"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0071_t0_g016_2",
+              "page": 71,
+              "unit": "Kesselbach",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:dp",
+              "pipeline": "5",
+              "official": 3,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0071_t0_c11_l051"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0071_t0_g019_2",
+              "page": 71,
+              "unit": "Lang-Göns",
+              "vote_type": "ZWEITSTIMME",
+              "field": "valid_votes",
+              "pipeline": "176",
+              "official": 1765,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0071_t0_c04_l060"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0073_t0_g008_2",
+              "page": 73,
+              "unit": "Stangenrod",
+              "vote_type": "ZWEITSTIMME",
+              "field": "valid_votes",
+              "pipeline": "295",
+              "official": 293,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0073_t0_c04_l025"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0074_t0_g002_1",
+              "page": 74,
+              "unit": "Bauschheim",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:spd",
+              "pipeline": "37",
+              "official": 373,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0074_t0_c05_l006"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0096_t0_g012_1",
+              "page": 96,
+              "unit": "Maberzell",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:cdu",
+              "pipeline": "0",
+              "official": 359,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0096_t0_c07_l036"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0096_t0_g012_1",
+              "page": 96,
+              "unit": "Maberzell",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:kpd",
+              "pipeline": "12",
+              "official": 0,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0096_t0_c08_l036"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0096_t0_g012_1",
+              "page": 96,
+              "unit": "Maberzell",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:gvp",
+              "pipeline": "2",
+              "official": 12,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0096_t0_c10_l036"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0096_t0_g012_1",
+              "page": 96,
+              "unit": "Maberzell",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:dp",
+              "pipeline": "0",
+              "official": 2,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0096_t0_c11_l036"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0098_t0_g004_2",
+              "page": 98,
+              "unit": "Rödergrund-Egelmes",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:spd",
+              "pipeline": "3",
+              "official": 2,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0098_t0_c05_l013"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0098_t0_g004_2",
+              "page": 98,
+              "unit": "Rödergrund-Egelmes",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:gb_bhe",
+              "pipeline": "2",
+              "official": 3,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0098_t0_c09_l013"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0106_t0_g000_2",
+              "page": 106,
+              "unit": "Schachten",
+              "vote_type": "ZWEITSTIMME",
+              "field": "party:gb_bhe",
+              "pipeline": "2",
+              "official": 22,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0106_t0_c09_l001"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0133_t0_g021_2",
+              "page": 133,
+              "unit": "Frielendorf",
+              "vote_type": "ZWEITSTIMME",
+              "field": "valid_votes",
+              "pipeline": "1",
+              "official": 1313,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0133_t0_c04_l064"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0139_t0_g001_1",
+              "page": 139,
+              "unit": "Gladenbach, Stadt",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:kpd",
+              "pipeline": "7",
+              "official": 67,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0139_t0_c08_l003"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0139_t0_g001_1",
+              "page": 139,
+              "unit": "Gladenbach, Stadt",
+              "vote_type": "ERSTSTIMME",
+              "field": "party:dp",
+              "pipeline": "40",
+              "official": 46,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0139_t0_c11_l003"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0145_t0_g011_1",
+              "page": 145,
+              "unit": "Hettersroth",
+              "vote_type": "ERSTSTIMME",
+              "field": "invalid_votes",
+              "pipeline": "0",
+              "official": -1,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0145_t0_c03_l033"
+            },
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0146_t0_g002_1",
+              "page": 146,
+              "unit": "Lützelhausen",
+              "vote_type": "ERSTSTIMME",
+              "field": "invalid_votes",
+              "pipeline": "0",
+              "official": -4,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0146_t0_c03_l006"
+            }
+          ]
+        },
+        {
+          "source": "Hessen 1953 municipalities, data-verified rows only",
+          "rows_considered": 767,
+          "rows_matched": 645,
+          "rows_ambiguous": 0,
+          "rows_unmatched": 122,
+          "cells_compared": 7095,
+          "cells_equal": 7094,
+          "per_field": {
+            "eligible_voters": {
+              "compared": 645,
+              "equal": 645
+            },
+            "invalid_votes": {
+              "compared": 645,
+              "equal": 644
+            },
+            "party:cdu": {
+              "compared": 645,
+              "equal": 645
+            },
+            "party:dp": {
+              "compared": 645,
+              "equal": 645
+            },
+            "party:fdp": {
+              "compared": 645,
+              "equal": 645
+            },
+            "party:gb_bhe": {
+              "compared": 645,
+              "equal": 645
+            },
+            "party:gvp": {
+              "compared": 645,
+              "equal": 645
+            },
+            "party:kpd": {
+              "compared": 645,
+              "equal": 645
+            },
+            "party:sonstige": {
+              "compared": 645,
+              "equal": 645
+            },
+            "party:spd": {
+              "compared": 645,
+              "equal": 645
+            },
+            "valid_votes": {
+              "compared": 645,
+              "equal": 645
+            }
+          },
+          "mismatches": [
+            {
+              "result_id": "run_20261012T174505Z_4ef8dc:run_20261012T174505Z_4ef8dc_p0146_t0_g002_1",
+              "page": 146,
+              "unit": "Lützelhausen",
+              "vote_type": "ERSTSTIMME",
+              "field": "invalid_votes",
+              "pipeline": "0",
+              "official": -4,
+              "cell_id": "run_20261012T174505Z_4ef8dc_p0146_t0_c03_l006"
+            }
+          ]
+        }
+      ],
+      "agreed_share": 0.9176
+    }
+  ]
+}

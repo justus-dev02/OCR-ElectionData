@@ -1,0 +1,42 @@
+election_id: btw_1965
+name: Wahl zum 5. Deutschen Bundestag
+election_type: Bundestagswahl
+election_date: 1965-09-19
+vote_types: [ERSTSTIMME, ZWEITSTIMME]
+verified: false
+sources:
+  - data/121_2611_65001.pdf page 30 table title ("... ZUM 5. DEUTSCHEN BUNDESTAG AM 19. SEPTEMBER 1965 ...")
+parties:
+  - party_id: cdu
+    display_name: CDU
+    aliases: [CDU]
+    states: [Baden-Württemberg]
+  - party_id: spd
+    display_name: SPD
+    aliases: [SPD]
+    states: [Baden-Württemberg]
+  - party_id: fdp
+    display_name: FDP
+    aliases: [FDP]
+    states: [Baden-Württemberg]
+  - party_id: aud
+    display_name: AUD
+    aliases: [AUD]
+    states: [Baden-Württemberg]
+  - party_id: dfu
+    display_name: DFU
+    aliases: [DFU]
+    states: [Baden-Württemberg]
+  - party_id: npd
+    display_name: NPD
+    aliases: [NPD]
+    states: [Baden-Württemberg]
+  - party_id: fsu
+    display_name: FSU
+    aliases: [FSU]
+    states: [Baden-Württemberg]
+  - party_id: sonstige
+    display_name: Sonstige
+    aliases: [Sonstige, SONSTIGE]
+    states: [Baden-Württemberg]
+    note: "printed only in the Wahlkreis tables: data/121_2611_65001.pdf Wahlkreis table pp. 20-29 (col 12 / 21)"

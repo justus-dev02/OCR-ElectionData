@@ -1,0 +1,412 @@
+# Document profile bound by SHA-256 to data/010_2611_49001.pdf. Domain data, NOT code.
+# keyword_min_similarity 0.6: the bold typewriter font of this volume is read poorly ('Kreis' -> 'KrelB');
+# only affects structure keywords (needs >=2 agreeing engines, names are still matched exactly).
+document_profile_id: bw_btw1949_gemeinden
+description: Die Wahl zum ersten Bundestag der Bundesrepublik Deutschland am 14. August 1949 - Gemeindeergebnisse (Statistik von Baden-Wuerttemberg,
+  Band 10)
+sha256:
+- 5797b07d8edaa2d096d47bac00ee0377b5ab602e5ce04bab0275441c011281b6
+verified: false
+sources:
+- 'data/010_2611_49001.pdf pages 10-89: column headers and ''Reg.Bez.'' page captions (visual inspection)'
+tables:
+- table_profile_id: bw49_gemeinde_results
+  election_id: btw_1949
+  description: One line per municipality; 'Kreis X' lines carry the county totals on the same line.
+  row_mode: single_line
+  line_anchor_column: eligible_voters
+  single_line_vote_type: SINGLE
+  label_pattern: ^(?P<index>\d+)\s+(?P<name>\S.*)$
+  section_kinds:
+    Stadtkreis: STADTKREIS
+    Landkreis: LANDKREIS
+    Kreis: LANDKREIS
+  continued_prefixes: []
+  section_header_has_totals: true
+  wrapped_label_attach: next
+  unit_level_default: GEMEINDE
+  required_checks:
+  - voters_le_eligible
+  - valid_le_voters
+  - party_sum_eq_valid
+  # whether the printed 'Wahlbeteiligung in vH' follows voters/eligible is decided on the data of each
+  # run (definition probe, validation/rules.py); this volume deviates in ~80 % of the rows
+  - turnout_consistent
+  variants:
+  - variant_id: nordwuerttemberg
+    pages: 10-32
+    state: Württemberg-Baden
+    context:
+      regierungsbezirk: Nordwürttemberg
+    columns:
+    - key: unit_label
+      role: unit_label
+      value_type: label
+      header_aliases:
+      - Gemeinde
+    - key: eligible_voters
+      role: metric
+      metric: eligible_voters
+      value_type: integer
+      header_aliases:
+      - Wahlberechtigte
+      integer_format: &id001
+        thousands_separators:
+        - ' '
+        dash_means_zero: true
+      column_number: 1
+    - key: voters
+      role: metric
+      metric: voters
+      value_type: integer
+      header_aliases:
+      - Insgesamt
+      - abgegebene Stimmen Insgesamt
+      integer_format: *id001
+      column_number: 2
+    - key: valid_votes
+      role: metric
+      metric: valid_votes
+      value_type: integer
+      header_aliases:
+      - darunter gültig
+      integer_format: *id001
+      column_number: 3
+    - key: turnout_percent
+      role: metric
+      metric: turnout_percent
+      value_type: decimal
+      header_aliases:
+      - Wahlbeteiligung in vH
+      decimal_format:
+        decimal_separator: ','
+        decimals: 1
+        min_value: '0'
+        max_value: '100'
+      column_number: 4
+    - key: party_cdu
+      role: party
+      party_id: cdu
+      value_type: integer
+      header_aliases:
+      - CDU
+      integer_format: *id001
+      column_number: 5
+    - key: party_spd
+      role: party
+      party_id: spd
+      value_type: integer
+      header_aliases:
+      - SPD
+      integer_format: *id001
+      column_number: 6
+    - key: party_fdp
+      role: party
+      party_id: fdp
+      value_type: integer
+      header_aliases:
+      - FDP/DVP
+      integer_format: *id001
+      column_number: 7
+    - key: party_kpd
+      role: party
+      party_id: kpd
+      value_type: integer
+      header_aliases:
+      - KPD
+      integer_format: *id001
+      column_number: 8
+    - &id002
+      key: party_notgemeinschaft
+      role: party
+      party_id: notgemeinschaft
+      value_type: integer
+      header_aliases:
+      - Notgemeinschaft
+      integer_format: *id001
+      column_number: 9
+    - key: party_sonstige
+      role: party
+      party_id: sonstige
+      value_type: integer
+      header_aliases:
+      - Sonstige
+      integer_format: *id001
+      column_number: 10
+  - variant_id: nordbaden
+    pages: 33-44
+    state: Württemberg-Baden
+    context:
+      regierungsbezirk: Nordbaden
+    columns:
+    - key: unit_label
+      role: unit_label
+      value_type: label
+      header_aliases:
+      - Gemeinde
+    - key: eligible_voters
+      role: metric
+      metric: eligible_voters
+      value_type: integer
+      header_aliases:
+      - Wahlberechtigte
+      integer_format: *id001
+      column_number: 1
+    - key: voters
+      role: metric
+      metric: voters
+      value_type: integer
+      header_aliases:
+      - Insgesamt
+      - abgegebene Stimmen Insgesamt
+      integer_format: *id001
+      column_number: 2
+    - key: valid_votes
+      role: metric
+      metric: valid_votes
+      value_type: integer
+      header_aliases:
+      - darunter gültig
+      integer_format: *id001
+      column_number: 3
+    - key: turnout_percent
+      role: metric
+      metric: turnout_percent
+      value_type: decimal
+      header_aliases:
+      - Wahlbeteiligung in vH
+      decimal_format:
+        decimal_separator: ','
+        decimals: 1
+        min_value: '0'
+        max_value: '100'
+      column_number: 4
+    - key: party_cdu
+      role: party
+      party_id: cdu
+      value_type: integer
+      header_aliases:
+      - CDU
+      integer_format: *id001
+      column_number: 5
+    - key: party_spd
+      role: party
+      party_id: spd
+      value_type: integer
+      header_aliases:
+      - SPD
+      integer_format: *id001
+      column_number: 6
+    - key: party_fdp
+      role: party
+      party_id: fdp
+      value_type: integer
+      header_aliases:
+      - FDP/DVP
+      integer_format: *id001
+      column_number: 7
+    - key: party_kpd
+      role: party
+      party_id: kpd
+      value_type: integer
+      header_aliases:
+      - KPD
+      integer_format: *id001
+      column_number: 8
+    - *id002
+    - key: party_sonstige
+      role: party
+      party_id: sonstige
+      value_type: integer
+      header_aliases:
+      - Sonstige
+      integer_format: *id001
+      column_number: 10
+  - variant_id: suedbaden
+    pages: 45-67
+    state: Baden
+    context:
+      regierungsbezirk: Südbaden
+    columns:
+    - key: unit_label
+      role: unit_label
+      value_type: label
+      header_aliases:
+      - Gemeinde
+    - key: eligible_voters
+      role: metric
+      metric: eligible_voters
+      value_type: integer
+      header_aliases:
+      - Wahlberechtigte
+      integer_format: *id001
+      column_number: 1
+    - key: voters
+      role: metric
+      metric: voters
+      value_type: integer
+      header_aliases:
+      - Insgesamt
+      - abgegebene Stimmen Insgesamt
+      integer_format: *id001
+      column_number: 2
+    - key: valid_votes
+      role: metric
+      metric: valid_votes
+      value_type: integer
+      header_aliases:
+      - darunter gültig
+      integer_format: *id001
+      column_number: 3
+    - key: turnout_percent
+      role: metric
+      metric: turnout_percent
+      value_type: decimal
+      header_aliases:
+      - Wahlbeteiligung in vH
+      decimal_format:
+        decimal_separator: ','
+        decimals: 1
+        min_value: '0'
+        max_value: '100'
+      column_number: 4
+    - key: party_cdu
+      role: party
+      party_id: cdu
+      value_type: integer
+      header_aliases:
+      - CDU
+      integer_format: *id001
+      column_number: 5
+    - key: party_spd
+      role: party
+      party_id: spd
+      value_type: integer
+      header_aliases:
+      - SPD
+      integer_format: *id001
+      column_number: 6
+    - key: party_fdp
+      role: party
+      party_id: fdp
+      value_type: integer
+      header_aliases:
+      - FDP/DVP
+      integer_format: *id001
+      column_number: 7
+    - key: party_kpd
+      role: party
+      party_id: kpd
+      value_type: integer
+      header_aliases:
+      - KPD
+      integer_format: *id001
+      column_number: 8
+    - &id003
+      key: party_evd_szt
+      role: party
+      party_id: evd_szt
+      value_type: integer
+      header_aliases:
+      - EVD/SzT
+      integer_format: *id001
+      column_number: 9
+    - key: party_sonstige
+      role: party
+      party_id: sonstige
+      value_type: integer
+      header_aliases:
+      - Sonstige
+      integer_format: *id001
+      column_number: 10
+  - variant_id: suedwuerttemberg_hohenzollern
+    pages: 68-89
+    state: Württemberg-Hohenzollern
+    context:
+      regierungsbezirk: Südwürttemberg-Hohenzollern
+    columns:
+    - key: unit_label
+      role: unit_label
+      value_type: label
+      header_aliases:
+      - Gemeinde
+    - key: eligible_voters
+      role: metric
+      metric: eligible_voters
+      value_type: integer
+      header_aliases:
+      - Wahlberechtigte
+      integer_format: *id001
+      column_number: 1
+    - key: voters
+      role: metric
+      metric: voters
+      value_type: integer
+      header_aliases:
+      - Insgesamt
+      - abgegebene Stimmen Insgesamt
+      integer_format: *id001
+      column_number: 2
+    - key: valid_votes
+      role: metric
+      metric: valid_votes
+      value_type: integer
+      header_aliases:
+      - darunter gültig
+      integer_format: *id001
+      column_number: 3
+    - key: turnout_percent
+      role: metric
+      metric: turnout_percent
+      value_type: decimal
+      header_aliases:
+      - Wahlbeteiligung in vH
+      decimal_format:
+        decimal_separator: ','
+        decimals: 1
+        min_value: '0'
+        max_value: '100'
+      column_number: 4
+    - key: party_cdu
+      role: party
+      party_id: cdu
+      value_type: integer
+      header_aliases:
+      - CDU
+      integer_format: *id001
+      column_number: 5
+    - key: party_spd
+      role: party
+      party_id: spd
+      value_type: integer
+      header_aliases:
+      - SPD
+      integer_format: *id001
+      column_number: 6
+    - key: party_fdp
+      role: party
+      party_id: fdp
+      value_type: integer
+      header_aliases:
+      - FDP/DVP
+      integer_format: *id001
+      column_number: 7
+    - key: party_kpd
+      role: party
+      party_id: kpd
+      value_type: integer
+      header_aliases:
+      - KPD
+      integer_format: *id001
+      column_number: 8
+    - *id003
+    - key: party_sonstige
+      role: party
+      party_id: sonstige
+      value_type: integer
+      header_aliases:
+      - Sonstige
+      integer_format: *id001
+      column_number: 10
+  anchor_confirmation_column: voters
+  keyword_min_similarity: 0.6

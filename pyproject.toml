@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "election-ocr"
+version = "0.3.0"
+description = "Historical election document understanding & verification (no LLM/VLM)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pymupdf>=1.24",
+    "opencv-python-headless>=4.8",
+    "numpy>=1.26",
+    "pillow>=10",
+    "pydantic>=2.5",
+    "pydantic-settings>=2.2",
+    "pyyaml>=6",
+    "sqlalchemy>=2.0",
+    "rapidfuzz>=3.0",
+    "click>=8.1",
+    "rich>=13",
+    "pandas>=2.0",
+    "pyarrow>=14",
+    "openpyxl>=3.1",  # reading the official comparison files (report validation)
+    # OCR engines (Tesseract 5 must be installed on the system, e.g. `brew install tesseract tesseract-lang`)
+    "tesserocr>=2.7",
+    "easyocr>=1.7",
+    # ML table detection / structure (Table Transformer)
+    "torch>=2.2",
+    "torchvision>=0.17",
+    "transformers>=4.40",
+    "timm>=0.9",
+    "huggingface_hub>=0.23",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff==0.6.9", "mypy==1.18.2", "types-PyYAML"]
+
+[project.scripts]
+election-ocr = "election_ocr.cli:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+addopts = "-q -m 'not slow'"
+markers = [
+    "slow: runs the real OCR/ML pipeline on sample PDF pages (needs Tesseract, model weights and data/)",
+]
+
+[tool.coverage.run]
+source = ["src/election_ocr"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.ruff]
+line-length = 130
+target-version = "py312"
+extend-exclude = [".work", "models", "output"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = [
+    "E501",   # line length is owned by `ruff format`; long comments/strings are allowed
+    "RUF007", # zip(a, a[1:]) reads naturally next to the geometry formulas
+    "RUF005", # list concatenation is used deliberately for small literal lists
+    "SIM102", # nested ifs keep the per-condition comments readable
+    "E741",   # 'l' is used for line objects throughout the geometry code
+    "RUF001", "RUF002", "RUF003",  # German/typographic characters in domain strings are intentional
+    "UP007", "UP006", "UP035",  # keep typing.Optional/List style consistent with the codebase
+    "B905",   # zip() without strict= is intentional for paired geometric sequences
+    "SIM108",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["election_ocr"]
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src/election_ocr"]
+plugins = ["pydantic.mypy"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["cv2.*", "easyocr.*", "tesserocr.*", "fitz.*", "pymupdf.*", "transformers.*", "timm.*", "torch.*", "torchvision.*", "huggingface_hub.*", "pyarrow.*", "pandas.*", "rapidfuzz.*", "openpyxl.*"]
+ignore_missing_imports = true

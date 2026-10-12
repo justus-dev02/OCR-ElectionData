@@ -1,0 +1,39 @@
+election_id: btw_1949
+name: Wahl zum 1. Deutschen Bundestag
+election_type: Bundestagswahl
+election_date: 1949-08-14
+vote_types: [SINGLE]
+verified: false
+sources:
+  - data/010_2611_49001.pdf title page ("am 14. August 1949")
+parties:
+  - party_id: cdu
+    display_name: CDU
+    aliases: [CDU]
+    states: [Württemberg-Baden, Baden, Württemberg-Hohenzollern]
+  - party_id: spd
+    display_name: SPD
+    aliases: [SPD]
+    states: [Württemberg-Baden, Baden, Württemberg-Hohenzollern]
+  - party_id: fdp
+    display_name: FDP/DVP
+    aliases: [FDP/DVP]
+    states: [Württemberg-Baden, Baden, Württemberg-Hohenzollern]
+  - party_id: kpd
+    display_name: KPD
+    aliases: [KPD]
+    states: [Württemberg-Baden, Baden, Württemberg-Hohenzollern]
+  - party_id: notgemeinschaft
+    display_name: Notgemeinschaft
+    aliases: [Notgemeinschaft]
+    states: [Württemberg-Baden]
+    note: printed as column 9 for Reg.-Bez. Nordwuerttemberg and Nordbaden
+  - party_id: evd_szt
+    display_name: EVD/SzT
+    aliases: [EVD/SzT]
+    states: [Baden, Württemberg-Hohenzollern]
+    note: printed as column 9 for Reg.-Bez. Suedbaden and Suedwuerttemberg-Hohenzollern
+  - party_id: sonstige
+    display_name: Sonstige
+    aliases: [Sonstige]
+    states: [Württemberg-Baden, Baden, Württemberg-Hohenzollern]

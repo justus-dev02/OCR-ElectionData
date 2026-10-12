@@ -1,0 +1,49 @@
+election_id: btw_1953
+name: Wahl zum 2. Deutschen Bundestag
+election_type: Bundestagswahl
+election_date: 1953-09-06
+vote_types: [ERSTSTIMME, ZWEITSTIMME]
+verified: false
+sources:
+  - data/Hessen_Bundestagswahl_Statistik1953.pdf title page ("in Hessen am 6. September 1953")
+  - data/011_2611_53001.pdf page 3 ("Die Wahl zum zweiten Bundestag am 6. September 1953")
+parties:
+  - party_id: spd
+    display_name: SPD
+    aliases: [SPD]
+    states: [Hessen, Baden-Württemberg]
+  - party_id: fdp
+    display_name: FDP
+    aliases: [FDP, FDP/DVP]
+    note: printed as "FDP/DVP" in data/011_2611_53001.pdf
+    states: [Hessen, Baden-Württemberg]
+  - party_id: cdu
+    display_name: CDU
+    aliases: [CDU]
+    states: [Hessen, Baden-Württemberg]
+  - party_id: kpd
+    display_name: KPD
+    aliases: [KPD]
+    states: [Hessen, Baden-Württemberg]
+  - party_id: gb_bhe
+    display_name: BHE
+    aliases: [BHE, GB/BHE]
+    states: [Hessen, Baden-Württemberg]
+  - party_id: gvp
+    display_name: GVP
+    aliases: [GVP]
+    states: [Hessen, Baden-Württemberg]
+  - party_id: dp
+    display_name: DP
+    aliases: [DP]
+    states: [Hessen, Baden-Württemberg]
+  - party_id: sonstige
+    display_name: Sonstige
+    aliases: [Sonstige]
+    states: [Hessen, Baden-Württemberg]
+    note: 'Hessen publication footnote 1): "1953: DNS; 1949: Unabhaengige Bewerber und AP". Baden-Wuerttemberg: Erststimmen only (col 14 of data/011_2611_53001.pdf)'
+  - party_id: dns
+    display_name: DNS
+    aliases: [DNS]
+    states: [Baden-Württemberg]
+    note: data/011_2611_53001.pdf Gemeindeergebnisse cols 12 (Erststimmen) and 23 (Zweitstimmen)

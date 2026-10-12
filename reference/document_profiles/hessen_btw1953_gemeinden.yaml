@@ -1,0 +1,68 @@
+# Document profile: "Hessen waehlt zum zweiten Bundestag" (Beitraege zur Statistik Hessens Nr. 64)
+# Bound to the exact source file by SHA-256. Describes the municipal result tables
+# ("Bundestagswahl 1953 in den Hessischen Gemeinden"), pages 44-171.
+document_profile_id: hessen_btw1953_gemeinden
+description: Gemeindeergebnisse Bundestagswahl 1953 in Hessen (Erst-/Zweitstimmen + Vergleich 1949)
+sha256:
+  - dbe43f7d84a42b6b826500b8dfd4da8e042658a266816060b51d3f0d1c733eec
+verified: false
+sources:
+  - data/Hessen_Bundestagswahl_Statistik1953.pdf pages 44-171 (visual inspection of header and footnote)
+
+tables:
+  - table_profile_id: he53_gemeinde_results
+    election_id: btw_1953
+    description: >-
+      One municipality = 3 lines marked 1 (Erststimmen), 2 (Zweitstimmen),
+      V (Vergleichszahlen Bundestagswahl 1949, footnote *).
+    row_mode: marker_group
+    line_anchor_column: vote_marker
+    anchor_confirmation_column: eligible_voters
+    marker_column: vote_marker
+    marker_sequence: ["1", "2", "V"]
+    row_roles:
+      "1": {vote_type: ERSTSTIMME, publish: true}
+      "2": {vote_type: ZWEITSTIMME, publish: true}
+      "V": {vote_type: COMPARISON, publish: false, election_id: btw_1949}
+    label_pattern: '^(?P<index>\d+)\s+(?P<name>\S.*)$'
+    section_kinds: {Landkreis: LANDKREIS, Stadtkreis: STADTKREIS}
+    continued_prefixes: [noch]
+    section_header_has_totals: false
+    total_keywords: [Zusammen]
+    wrapped_label_attach: group
+    unit_level_default: GEMEINDE
+    required_checks: [party_sum_eq_valid, valid_plus_invalid_le_eligible]
+    consistent_fields_across_markers: {eligible_voters: ["1", "2"]}
+    variants:
+      - variant_id: hessen
+        pages: "44-171"
+        state: Hessen
+        columns:
+          - {key: unit_label, role: unit_label, value_type: label, header_aliases: [Gemeinde]}
+          - {key: vote_marker, role: row_marker, value_type: marker, header_aliases: [Wahl]}
+          - key: eligible_voters
+            role: metric
+            metric: eligible_voters
+            value_type: integer
+            header_aliases: [Wahlberechtigte]
+            integer_format: {thousands_separators: [" "], dash_means_zero: true}
+          - key: invalid_votes
+            role: metric
+            metric: invalid_votes
+            value_type: integer
+            header_aliases: [Ungültige Stimmen]
+            integer_format: {thousands_separators: [" "], dash_means_zero: true}
+          - key: valid_votes
+            role: metric
+            metric: valid_votes
+            value_type: integer
+            header_aliases: [Gültige Stimmen]
+            integer_format: {thousands_separators: [" "], dash_means_zero: true}
+          - {key: party_spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: {thousands_separators: [" "], dash_means_zero: true}}
+          - {key: party_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP], integer_format: {thousands_separators: [" "], dash_means_zero: true}}
+          - {key: party_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: {thousands_separators: [" "], dash_means_zero: true}}
+          - {key: party_kpd, role: party, party_id: kpd, value_type: integer, header_aliases: [KPD], integer_format: {thousands_separators: [" "], dash_means_zero: true}}
+          - {key: party_bhe, role: party, party_id: gb_bhe, value_type: integer, header_aliases: [BHE], integer_format: {thousands_separators: [" "], dash_means_zero: true}}
+          - {key: party_gvp, role: party, party_id: gvp, value_type: integer, header_aliases: [GVP], integer_format: {thousands_separators: [" "], dash_means_zero: true}}
+          - {key: party_dp, role: party, party_id: dp, value_type: integer, header_aliases: [DP], integer_format: {thousands_separators: [" "], dash_means_zero: true}}
+          - {key: party_sonstige, role: party, party_id: sonstige, value_type: integer, header_aliases: [Sonstige], integer_format: {thousands_separators: [" "], dash_means_zero: true}}

@@ -1,0 +1,198 @@
+# Document profile bound by SHA-256 to data/080_2611_61001.pdf (Statistik von Baden-Wuerttemberg, Band 80:
+# "Die Wahl zum vierten Deutschen Bundestag, 17. September 1961"), table 3
+# "Ergebnisse der Bundestagswahl 1961 in den Gemeinden Baden-Wuerttembergs", pages 33-133.
+# Domain data, NOT code. Created 2026-09-30 from visual inspection; verified: false until checked.
+#
+# Layout (all pages): ruled table, one unit = two lines "E" (Erststimmen) and "Z" (Zweitstimmen).
+# Wahlberechtigte, Waehler and Wahlbeteiligung are printed ONCE on the E line and apply to both votes.
+# "Landkreis X" alone opens a section, "Noch: Landkreis X" continues it, a "Landkreis X" line WITH
+# numbers closes it as its total. "Stadtkreise" / "Landkreise" / "Regierungsbezirk X" are headings.
+document_profile_id: bw_btw1961_gemeinden
+description: Bundestagswahl 1961, Gemeindeergebnisse Baden-Wuerttemberg (Statistik von Baden-Wuerttemberg, Band 80, Tabelle 3)
+sha256:
+  - f360c091aa653a4022dfbd305c4e087145f278bd26a369473204bc5d7f5206c2
+verified: false
+sources:
+  - data/080_2611_61001.pdf pages 33-133 (column headers, section structure; visual inspection 2026-09-30)
+
+x-formats:
+  int: &int {thousands_separators: [" "], dash_means_zero: true}
+  pct: &pct {decimal_separator: ",", decimals: 1, min_value: "0", max_value: "100"}
+  pct0: &pct0 {decimal_separator: ",", decimals: 1, min_value: "0", max_value: "100", dash_means_zero: true}  # vH of a party without votes: '-' 
+
+tables:
+  - table_profile_id: bw61_gemeinde_results
+    election_id: btw_1961
+    description: Two lines per unit (E, Z); section totals printed at the end of each Landkreis.
+    row_mode: marker_group
+    line_anchor_column: vote_marker
+    anchor_confirmation_column: valid
+    marker_column: vote_marker
+    marker_sequence: [E, Z]
+    group_by: gap
+    # measured p.40: E->Z 27-29 px, Z->next E 41-42 px (x1.5) -> split at 1.25 x inner line spacing
+    group_gap_ratio: 1.25
+    roles:
+      - role_id: erst
+        vote_type: ERSTSTIMME
+        slot: 0
+        fields: &erst_fields
+          - {field: eligible_voters, column: eligible, slot: 0}
+          - {field: voters, column: voters, slot: 0}
+          - {field: turnout_percent, column: turnout, slot: 0}
+          - {field: invalid_votes, column: invalid}
+          - {field: valid_votes, column: valid}
+          - {field: "party:cdu", column: party_cdu}
+          - {field: "party:spd", column: party_spd}
+          - {field: "party:fdp", column: party_fdp}
+          - {field: "party:gdp", column: party_gdp}
+          - {field: "party:dfu", column: party_dfu}
+          - {field: "party:dg", column: party_dg}
+          - {field: "party:drp", column: party_drp}
+      - role_id: zweit
+        vote_type: ZWEITSTIMME
+        slot: 1
+        fields: *erst_fields   # same columns; values without explicit slot are read on the Z line
+    label_pattern: '^(?P<index>\d+)\s+(?P<name>\S.*)$'
+    section_kinds: {Landkreis: LANDKREIS}
+    continued_prefixes: ["Noch"]
+    section_footer_has_totals: true
+    structural_headings:
+      Stadtkreise: {unit_level: STADTKREIS}
+      Landkreise: {}
+      Regierungsbezirk: {with_name: true, context_key: regierungsbezirk}
+    # long names wrap: the first part is printed on the line ABOVE the E line (e.g. p.35 "2 Allmersbach am" / "Weinberg")
+    wrapped_label_attach: next
+    unit_level_default: GEMEINDE
+    required_checks: [voters_le_eligible, voters_eq_valid_plus_invalid, party_sum_eq_valid, turnout_consistent]
+    structure: {columns: body_rules, header_end: rule}
+    variants:
+      - variant_id: nordwuerttemberg
+        pages: "33-62"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Nordwürttemberg}
+        columns: &columns61
+          - {key: label, role: unit_label, value_type: label, header_aliases: ["Stadtkreis/Landkreis Gemeinde", "Gemeinde"]}
+          - {key: eligible, role: metric, metric: eligible_voters, value_type: integer, header_aliases: [Wahlberechtigte], integer_format: *int}
+          - {key: voters, role: metric, metric: voters, value_type: integer, header_aliases: ["Wähler"], integer_format: *int}
+          - {key: turnout, role: metric, metric: turnout_percent, value_type: decimal, header_aliases: ["Wahlbeteiligung in vH"], decimal_format: *pct}
+          - {key: vote_marker, role: row_marker, value_type: marker, header_aliases: ["Erststimmen = E Zweitstimmen = Z"]}
+          - {key: invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: ["Ungültige Stimmen"], integer_format: *int}
+          - {key: valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: ["Gültige Stimmen"], integer_format: *int}
+          - {key: party_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: *int}
+          - {key: party_spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: *int}
+          - {key: party_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP/DVP], integer_format: *int}
+          - {key: party_gdp, role: party, party_id: gdp, value_type: integer, header_aliases: [GDP], integer_format: *int}
+          - {key: party_dfu, role: party, party_id: dfu, value_type: integer, header_aliases: [DFU], integer_format: *int}
+          - {key: party_dg, role: party, party_id: dg, value_type: integer, header_aliases: [DG], integer_format: *int}
+          - {key: party_drp, role: party, party_id: drp, value_type: integer, header_aliases: [DRP], integer_format: *int}
+      - variant_id: nordbaden
+        pages: "63-76"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Nordbaden}
+        columns: *columns61
+      - variant_id: suedbaden
+        pages: "77-104"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Südbaden}
+        columns: *columns61
+      - variant_id: suedwuerttemberg_hohenzollern
+        pages: "105-133"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Südwürttemberg-Hohenzollern}
+        columns: *columns61
+
+  # Table 2 "Ergebnisse der Bundestagswahl 1961 in den Wahlkreisen Baden-Wuerttembergs", pages 31 (left) /
+  # 32 (right) of one spread; visual inspection 2026-10-01. One constituency = two lines E / Z; Wahlberechtigte,
+  # Waehler and Wahlbeteiligung only on the E line. Every party column is followed by its share (vH) on the
+  # SAME line. The constituency number is printed left (Nr.) and again right ("Nr. des Bundestagswahlkreises").
+  # Last row: "163-195 Wahlkreise zusammen" (Land total, no Regierungsbezirk subtotals in this table).
+  - table_profile_id: bw61_wahlkreis_results
+    election_id: btw_1961
+    description: Wahlkreisergebnisse, two lines per constituency (E, Z) with vH columns, Land total.
+    row_mode: marker_group
+    line_anchor_column: vote_marker
+    anchor_confirmation_column: valid
+    marker_column: vote_marker
+    marker_sequence: [E, Z]
+    group_by: gap
+    roles:
+      - role_id: erst
+        vote_type: ERSTSTIMME
+        slot: 0
+        fields: &wk61_abs
+          - {field: eligible_voters, column: eligible, slot: 0}
+          - {field: voters, column: voters, slot: 0}
+          - {field: turnout_percent, column: turnout, slot: 0}
+          - {field: invalid_votes, column: invalid}
+          - {field: valid_votes, column: valid}
+          - {field: "party:cdu", column: cdu}
+          - {field: "party:spd", column: spd}
+          - {field: "party:fdp", column: fdp}
+          - {field: "party:gdp", column: gdp}
+          - {field: "party:dfu", column: dfu}
+          - {field: "party:dg", column: dg}
+          - {field: "party:drp", column: drp}
+      - {role_id: zweit, vote_type: ZWEITSTIMME, slot: 1, fields: *wk61_abs}
+      - role_id: pct_e
+        vote_type: ERSTSTIMME
+        slot: 0
+        kind: percent
+        percent_of: erst
+        publish: false
+        fields: &wk61_pct
+          - {field: "party:cdu", column: cdu_vh}
+          - {field: "party:spd", column: spd_vh}
+          - {field: "party:fdp", column: fdp_vh}
+          - {field: "party:gdp", column: gdp_vh}
+          - {field: "party:dfu", column: dfu_vh}
+          - {field: "party:dg", column: dg_vh}
+          - {field: "party:drp", column: drp_vh}
+      - {role_id: pct_z, vote_type: ZWEITSTIMME, slot: 1, kind: percent, percent_of: zweit, publish: false, fields: *wk61_pct}
+    percent_definitions:
+      "party:*": {numerator: "party:*", denominator: [valid_votes]}
+    label_pattern: '^(?P<name>\S.*)$'
+    section_kinds: {}
+    total_keywords: ["Wahlkreise zusammen"]   # printed with the index range '163-195'
+    keyword_precedence: true                  # names carry no index here, so every label would match as a unit
+    implicit_sections: true
+    total_when_unindexed: true
+    section_total_level: LAND
+    grand_total_level: LAND
+    unit_level_default: WAHLKREIS
+    required_checks: [voters_le_eligible, voters_eq_valid_plus_invalid, party_sum_eq_valid, turnout_consistent]
+    structure: {columns: body_rules, header_end: rule}
+    variants:
+      - variant_id: wahlkreise
+        pages: "31"
+        state: Baden-Württemberg
+        columns:
+          - {key: nr, role: unit_index, value_type: integer, header_aliases: ["Nr."], integer_format: {thousands_separators: [], dash_means_zero: false}}
+          - {key: label, role: unit_label, value_type: label, header_aliases: [Name, "Bundestagswahlkreis Name"]}
+          - {key: eligible, role: metric, metric: eligible_voters, value_type: integer, header_aliases: [Wahlberechtigte], integer_format: *int}
+          - {key: voters, role: metric, metric: voters, value_type: integer, header_aliases: ["Wähler"], integer_format: *int}
+          - {key: turnout, role: metric, metric: turnout_percent, value_type: decimal, header_aliases: ["Wahlbeteiligung in vH"], decimal_format: *pct}
+          - {key: vote_marker, role: row_marker, value_type: marker, header_aliases: ["Erststimmen E Zweitstimmen Z"]}
+          - {key: invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: ["Ungültige Stimmen"], integer_format: *int}
+          - {key: valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: ["Gültige Stimmen"], integer_format: *int}
+          - {key: cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: *int}
+          - {key: cdu_vh, role: party, party_id: cdu, value_type: decimal, header_aliases: [vH], decimal_format: *pct0, roles: [pct_e, pct_z]}
+        continuation:
+          page_offset: 1
+          line_anchor_column: spd
+          anchor_confirmation_column: fdp
+          index_column: wk_nr
+          columns:
+            - {key: spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: *int}
+            - {key: spd_vh, role: party, party_id: spd, value_type: decimal, header_aliases: [vH], decimal_format: *pct0, roles: [pct_e, pct_z]}
+            - {key: fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP/DVP], integer_format: *int}
+            - {key: fdp_vh, role: party, party_id: fdp, value_type: decimal, header_aliases: [vH], decimal_format: *pct0, roles: [pct_e, pct_z]}
+            - {key: gdp, role: party, party_id: gdp, value_type: integer, header_aliases: [GDP], integer_format: *int}
+            - {key: gdp_vh, role: party, party_id: gdp, value_type: decimal, header_aliases: [vH], decimal_format: *pct0, roles: [pct_e, pct_z]}
+            - {key: dfu, role: party, party_id: dfu, value_type: integer, header_aliases: [DFU], integer_format: *int}
+            - {key: dfu_vh, role: party, party_id: dfu, value_type: decimal, header_aliases: [vH], decimal_format: *pct0, roles: [pct_e, pct_z]}
+            - {key: dg, role: party, party_id: dg, value_type: integer, header_aliases: [DG], integer_format: *int}
+            - {key: dg_vh, role: party, party_id: dg, value_type: decimal, header_aliases: [vH], decimal_format: *pct0, roles: [pct_e, pct_z]}
+            - {key: drp, role: party, party_id: drp, value_type: integer, header_aliases: [DRP], integer_format: *int}
+            - {key: drp_vh, role: party, party_id: drp, value_type: decimal, header_aliases: [vH], decimal_format: *pct0, roles: [pct_e, pct_z]}
+            - {key: wk_nr, role: unit_index, value_type: integer, header_aliases: ["Nr. des Bundestagswahlkreises"], integer_format: {thousands_separators: [], dash_means_zero: false}}

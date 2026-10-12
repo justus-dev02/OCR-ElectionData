@@ -1,0 +1,484 @@
+# Document profile bound by SHA-256 to data/166_2611_69001.pdf (Statistik von Baden-Wuerttemberg, Band 166:
+# "Die Wahl zum sechsten Deutschen Bundestag", 28. September 1969), table 2
+# "Endgueltige Ergebnisse der Wahl zum 6. Deutschen Bundestag ... in den Gemeinden", pages 31-283.
+# Domain data, NOT code. Created 2026-09-30 (visual inspection), verified: false until checked.
+#
+# Layout: printout like 1965, but the HEADER is a ruled box (vertical rules only in the header, body
+# without rules, no column numbers): column separators = header rules, confirmed by the body gutters.
+# One unit = 4 lines as in 1965: ABS/E, ABS/Z (absolute numbers), %/E, %/Z (shares). Kennziffer + name + 'ABS' on the
+# first line; Wahlberechtigte and Waehler only on the first line; the turnout is printed in the Waehler
+# column of the first %-line. Parties without votes are printed as EMPTY cells (no dash).
+# Decisions (docs/decisions.md D6, D7): empty party cell = 0 only with exact party-sum proof; %-lines are a blocking
+# cross-check and never published. Names are printed in capitals without umlauts ('GAERTRINGEN').
+document_profile_id: bw_btw1969_gemeinden
+description: Bundestagswahl 1969, Gemeindeergebnisse Baden-Wuerttemberg (Statistik von Baden-Wuerttemberg, Band 166, Tabelle 2)
+sha256:
+  - 3da42b21f99fd6c6377b8e8f5d10265baa957e9e9a0f34b397b735663485c57f
+verified: false
+sources:
+  - data/166_2611_69001.pdf pages 31-283 (column headers, row structure; visual inspection 2026-09-30)
+
+x-formats:
+  int: &int {thousands_separators: [], dash_means_zero: false}
+  idx: &idx {thousands_separators: [], dash_means_zero: false}
+
+tables:
+  - table_profile_id: bw69_gemeinde_results
+    election_id: btw_1969
+    description: Four lines per unit (ABS E, ABS Z, % E, % Z); groups start at the line carrying Kennziffer/name.
+    row_mode: marker_group
+    line_anchor_column: vote_marker
+    anchor_confirmation_column: valid
+    marker_column: vote_marker
+    marker_sequence: [E, Z, E, Z]
+    marker_columns:
+      designation: ["*", null, "*", null]     # 'ABS' on the first, '%' on the third line; nothing else
+      # E/Z must be printed on every line, but its reading is not required as evidence: the slot of each
+      # line is already fixed by the labelled first line, the group size 4, the designation pattern above
+      # and the percent format + blocking percent cross-check of lines 3/4 (E/Z glyphs of the printout are
+      # read poorly, e.g. EasyOCR 'E' for 'Z' in 1969).
+      vote_marker: ["*", "*", "*", "*"]
+    group_by: label_start
+    formats:
+      pct1: {value_type: decimal, decimal_format: {decimal_separator: ",", decimals: 1, min_value: "0", max_value: "100"}}
+    roles:
+      - role_id: abs_e
+        vote_type: ERSTSTIMME
+        slot: 0
+        fields:
+          - {field: eligible_voters, column: eligible, slot: 0}
+          - {field: voters, column: voters, slot: 0}
+          - &abs_turnout {field: turnout_percent, column: voters, slot: 2, format: pct1}
+          - &abs_invalid {field: invalid_votes, column: invalid}
+          - &abs_valid {field: valid_votes, column: valid}
+          - &abs_cdu {field: "party:cdu", column: party_cdu}
+          - &abs_spd {field: "party:spd", column: party_spd}
+          - &abs_fdp {field: "party:fdp", column: party_fdp}
+          - &abs_adf {field: "party:adf", column: party_adf}
+          - &abs_ep {field: "party:ep", column: party_ep}
+          - &abs_fsu {field: "party:fsu", column: party_fsu}
+          - &abs_gpd {field: "party:gpd", column: party_gpd}
+          - &abs_npd {field: "party:npd", column: party_npd}
+          - &abs_einz {field: "party:einzelbewerber", column: party_einz}
+      - role_id: abs_z
+        vote_type: ZWEITSTIMME
+        slot: 1
+        fields:
+          - {field: eligible_voters, column: eligible, slot: 0}
+          - {field: voters, column: voters, slot: 0}
+          - *abs_turnout
+          - *abs_invalid
+          - *abs_valid
+          - *abs_cdu
+          - *abs_spd
+          - *abs_fdp
+          - *abs_adf
+          - *abs_ep
+          - *abs_fsu
+          - *abs_gpd
+          - *abs_npd
+          - *abs_einz
+      - role_id: pct_e
+        vote_type: ERSTSTIMME
+        slot: 2
+        kind: percent
+        percent_of: abs_e
+        publish: false
+        fields:
+          - {field: turnout_percent, column: voters, format: pct1}
+          - &pct_invalid {field: invalid_votes, column: invalid, format: pct1}
+          - &pct_valid {field: valid_votes, column: valid, format: pct1}
+          - &pct_cdu {field: "party:cdu", column: party_cdu, format: pct1}
+          - &pct_spd {field: "party:spd", column: party_spd, format: pct1}
+          - &pct_fdp {field: "party:fdp", column: party_fdp, format: pct1}
+          - &pct_adf {field: "party:adf", column: party_adf, format: pct1}
+          - &pct_ep {field: "party:ep", column: party_ep, format: pct1}
+          - &pct_fsu {field: "party:fsu", column: party_fsu, format: pct1}
+          - &pct_gpd {field: "party:gpd", column: party_gpd, format: pct1}
+          - &pct_npd {field: "party:npd", column: party_npd, format: pct1}
+          - &pct_einz {field: "party:einzelbewerber", column: party_einz, format: pct1}
+      - role_id: pct_z
+        vote_type: ZWEITSTIMME
+        slot: 3
+        kind: percent
+        percent_of: abs_z
+        publish: false
+        fields: [*pct_invalid, *pct_valid, *pct_cdu, *pct_spd, *pct_fdp, *pct_adf, *pct_ep, *pct_fsu, *pct_gpd, *pct_npd, *pct_einz]
+    # Whether the printed turnout (first %-line, Waehler column; also published with the absolute
+    # rows) follows voters/eligible is decided on each run's data (definition probe) - not fixed here.
+    percent_definitions:
+      turnout_percent: {numerator: voters, denominator: [eligible_voters]}
+      invalid_votes: {numerator: invalid_votes, denominator: [invalid_votes, valid_votes]}
+      valid_votes: {numerator: valid_votes, denominator: [invalid_votes, valid_votes]}
+      "party:*": {numerator: "party:*", denominator: [valid_votes]}
+    blank_party_cells_zero_with_sum_proof: true
+    # name only (Kennziffer has its own column); trailing leader dots are no part of the name
+    label_pattern: '^(?P<name>[^\d\s].*?)(?:[\s.·•,:;''`*«»~-]*)$'
+    keyword_precedence: true
+    section_index_allowed: true
+    section_kinds: {"LKR.": LANDKREIS}
+    continued_prefixes: ["NOCH"]
+    total_keywords: ["INSGESAMT"]
+    structural_headings:
+      STADTKREISE: {unit_level: STADTKREIS}
+      LANDKREISE: {}
+    name_matching: ascii_printout
+    wrapped_label_attach: group
+    unit_level_default: GEMEINDE
+    required_checks: [voters_le_eligible, voters_eq_valid_plus_invalid, party_sum_eq_valid]
+    structure: {columns: header_rules, header_end: rule}
+    variants:
+      - variant_id: nordwuerttemberg
+        pages: "31-103"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Nordwürttemberg}
+        columns: &columns69
+          - {key: kennziffer, role: unit_index, value_type: integer, header_aliases: ["Kennziffer"], integer_format: *idx}
+          - {key: name, role: unit_label, value_type: label, header_aliases: ["Stadtkreis/Landkreis Gemeinde"]}
+          - {key: designation, role: row_marker, value_type: marker, header_aliases: ["Bezeichnung"]}
+          - {key: eligible, role: metric, metric: eligible_voters, value_type: integer, header_aliases: ["Wahlberechtigte"], integer_format: *int}
+          - {key: voters, role: metric, metric: voters, value_type: integer, header_aliases: ["Wähler"], integer_format: *int}
+          - {key: vote_marker, role: row_marker, value_type: marker, header_aliases: ["Erststimmen - E Zweitstimmen - Z"]}
+          - {key: invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: ["ungültige"], integer_format: *int}
+          - {key: valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: ["gültige"], integer_format: *int}
+          - {key: party_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: *int}
+          - {key: party_spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: *int}
+          - {key: party_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP], integer_format: *int}
+          - {key: party_adf, role: party, party_id: adf, value_type: integer, header_aliases: [ADF], integer_format: *int}
+          - {key: party_ep, role: party, party_id: ep, value_type: integer, header_aliases: [EP], integer_format: *int}
+          - {key: party_fsu, role: party, party_id: fsu, value_type: integer, header_aliases: [FSU], integer_format: *int}
+          - {key: party_gpd, role: party, party_id: gpd, value_type: integer, header_aliases: [GPD], integer_format: *int}
+          - {key: party_npd, role: party, party_id: npd, value_type: integer, header_aliases: [NPD], integer_format: *int}
+          - {key: party_einz, role: party, party_id: einzelbewerber, value_type: integer, header_aliases: ["Einz. Bew."], integer_format: *int}
+      - variant_id: nordbaden
+        pages: "104-140"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Nordbaden}
+        columns: *columns69
+      - variant_id: suedbaden
+        pages: "141-213"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Südbaden}
+        columns: *columns69
+      - variant_id: suedwuerttemberg_hohenzollern
+        pages: "214-283"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Südwürttemberg-Hohenzollern}
+        columns: *columns69
+
+  # Table 1a "Endgueltige Ergebnisse der Wahl zum 6. Deutschen Bundestag ... in den Bundestagswahlkreisen und
+  # Regierungsbezirken Baden-Wuerttembergs - Gesamtergebnisse", spreads 17/18 ... 25/26 (visual inspection
+  # 2026-10-01). Ruled header with column numbers 1-25, body without rules. One constituency = 6 lines as in
+  # 1965: 69 / vH / 65 (recomputed for the 1969 constituency) / vH / V (change, trailing minus) / vH (relative
+  # change). Wahlkreismandat on the 69 and 65 lines; stars below a value mark the strongest party; '*' before a
+  # name marks a changed constituency. Reg.-Bez. and Land totals carry no index. The 65 lines are a cross-check
+  # basis only (other boundaries than the official 1965 results).
+  - table_profile_id: bw69_wahlkreis_results
+    election_id: btw_1969
+    description: Wahlkreisergebnisse 1969 with 1965 comparison and change lines, Reg.-Bez. and Land totals.
+    row_mode: marker_group
+    marker_sequence: [j69, p69, j65, p65, v, pv]
+    marker_columns:
+      year: ["*", "*", "*", "*", "*", "*"]       # '69', 'VH', '65', 'VH', 'V', 'VH'
+      mandate: ["?", null, "?", null, null, null]
+    group_by: label_start
+    line_anchor_column: voters
+    anchor_confirmation_column: e_valid
+    formats:
+      pct1: {value_type: decimal, decimal_format: {decimal_separator: ",", decimals: 1, min_value: "0", max_value: "100"}}
+      diff: {value_type: integer, integer_format: {thousands_separators: [], dash_means_zero: false, sign: trailing}}
+      chg1: {value_type: decimal, decimal_format: {decimal_separator: ",", decimals: 1, min_value: "0", sign: trailing}}
+    roles:
+      - role_id: e69
+        vote_type: ERSTSTIMME
+        slot: 0
+        fields:
+          - {field: eligible_voters, column: eligible, slot: 0}
+          - {field: voters, column: voters, slot: 0}
+          - {field: turnout_percent, column: voters, slot: 1, format: pct1}
+          - {field: invalid_votes, column: e_invalid}
+          - {field: valid_votes, column: e_valid}
+          - {field: "party:cdu", column: e_cdu}
+          - {field: "party:spd", column: e_spd}
+          - {field: "party:fdp", column: e_fdp}
+          - {field: "party:adf", column: e_adf}
+          - {field: "party:ep", column: e_ep}
+          - {field: "party:fsu", column: e_fsu}
+          - {field: "party:gpd", column: e_gpd}
+          - {field: "party:npd", column: e_npd}
+          - {field: "party:einzelbewerber", column: e_einz}
+          - {field: "party:sonstige", column: e_sonst}
+      - role_id: z69
+        vote_type: ZWEITSTIMME
+        slot: 0
+        fields:
+          - {field: eligible_voters, column: eligible, slot: 0}
+          - {field: voters, column: voters, slot: 0}
+          - {field: turnout_percent, column: voters, slot: 1, format: pct1}
+          - {field: invalid_votes, column: z_invalid}
+          - {field: valid_votes, column: z_valid}
+          - {field: "party:cdu", column: z_cdu}
+          - {field: "party:spd", column: z_spd}
+          - {field: "party:fdp", column: z_fdp}
+          - {field: "party:adf", column: z_adf}
+          - {field: "party:ep", column: z_ep}
+          - {field: "party:fsu", column: z_fsu}
+          - {field: "party:gpd", column: z_gpd}
+          - {field: "party:npd", column: z_npd}
+          - {field: "party:sonstige", column: z_sonst}
+      - role_id: pe69
+        vote_type: ERSTSTIMME
+        slot: 1
+        kind: percent
+        percent_of: e69
+        publish: false
+        fields:
+          - {field: turnout_percent, column: voters, format: pct1}
+          - {field: invalid_votes, column: e_invalid, format: pct1}
+          - {field: valid_votes, column: e_valid, format: pct1}
+          - {field: "party:cdu", column: e_cdu, format: pct1}
+          - {field: "party:spd", column: e_spd, format: pct1}
+          - {field: "party:fdp", column: e_fdp, format: pct1}
+          - {field: "party:adf", column: e_adf, format: pct1}
+          - {field: "party:ep", column: e_ep, format: pct1}
+          - {field: "party:fsu", column: e_fsu, format: pct1}
+          - {field: "party:gpd", column: e_gpd, format: pct1}
+          - {field: "party:npd", column: e_npd, format: pct1}
+          - {field: "party:einzelbewerber", column: e_einz, format: pct1}
+          - {field: "party:sonstige", column: e_sonst, format: pct1}
+      - role_id: pz69
+        vote_type: ZWEITSTIMME
+        slot: 1
+        kind: percent
+        percent_of: z69
+        publish: false
+        fields:
+          - {field: invalid_votes, column: z_invalid, format: pct1}
+          - {field: valid_votes, column: z_valid, format: pct1}
+          - {field: "party:cdu", column: z_cdu, format: pct1}
+          - {field: "party:spd", column: z_spd, format: pct1}
+          - {field: "party:fdp", column: z_fdp, format: pct1}
+          - {field: "party:adf", column: z_adf, format: pct1}
+          - {field: "party:ep", column: z_ep, format: pct1}
+          - {field: "party:fsu", column: z_fsu, format: pct1}
+          - {field: "party:gpd", column: z_gpd, format: pct1}
+          - {field: "party:npd", column: z_npd, format: pct1}
+          - {field: "party:sonstige", column: z_sonst, format: pct1}
+      - role_id: e65
+        vote_type: ERSTSTIMME
+        slot: 2
+        election_id: btw_1965
+        publish: false
+        fields:
+          - {field: eligible_voters, column: eligible}
+          - {field: voters, column: voters}
+          - {field: turnout_percent, column: voters, slot: 3, format: pct1}
+          - {field: invalid_votes, column: e_invalid}
+          - {field: valid_votes, column: e_valid}
+          - {field: "party:cdu", column: e_cdu}
+          - {field: "party:spd", column: e_spd}
+          - {field: "party:fdp", column: e_fdp}
+          - {field: "party:adf", column: e_adf}
+          - {field: "party:ep", column: e_ep}
+          - {field: "party:fsu", column: e_fsu}
+          - {field: "party:gpd", column: e_gpd}
+          - {field: "party:npd", column: e_npd}
+          - {field: "party:einzelbewerber", column: e_einz}
+          - {field: "party:sonstige", column: e_sonst}
+      - role_id: z65
+        vote_type: ZWEITSTIMME
+        slot: 2
+        election_id: btw_1965
+        publish: false
+        fields:
+          - {field: eligible_voters, column: eligible}
+          - {field: voters, column: voters}
+          - {field: turnout_percent, column: voters, slot: 3, format: pct1}
+          - {field: invalid_votes, column: z_invalid}
+          - {field: valid_votes, column: z_valid}
+          - {field: "party:cdu", column: z_cdu}
+          - {field: "party:spd", column: z_spd}
+          - {field: "party:fdp", column: z_fdp}
+          - {field: "party:adf", column: z_adf}
+          - {field: "party:ep", column: z_ep}
+          - {field: "party:fsu", column: z_fsu}
+          - {field: "party:gpd", column: z_gpd}
+          - {field: "party:npd", column: z_npd}
+          - {field: "party:sonstige", column: z_sonst}
+      - role_id: pe65
+        vote_type: ERSTSTIMME
+        slot: 3
+        kind: percent
+        percent_of: e65
+        publish: false
+        fields:
+          - {field: turnout_percent, column: voters, format: pct1}
+          - {field: invalid_votes, column: e_invalid, format: pct1}
+          - {field: valid_votes, column: e_valid, format: pct1}
+          - {field: "party:cdu", column: e_cdu, format: pct1}
+          - {field: "party:spd", column: e_spd, format: pct1}
+          - {field: "party:fdp", column: e_fdp, format: pct1}
+          - {field: "party:adf", column: e_adf, format: pct1}
+          - {field: "party:ep", column: e_ep, format: pct1}
+          - {field: "party:fsu", column: e_fsu, format: pct1}
+          - {field: "party:gpd", column: e_gpd, format: pct1}
+          - {field: "party:npd", column: e_npd, format: pct1}
+          - {field: "party:einzelbewerber", column: e_einz, format: pct1}
+          - {field: "party:sonstige", column: e_sonst, format: pct1}
+      - role_id: pz65
+        vote_type: ZWEITSTIMME
+        slot: 3
+        kind: percent
+        percent_of: z65
+        publish: false
+        fields:
+          - {field: invalid_votes, column: z_invalid, format: pct1}
+          - {field: valid_votes, column: z_valid, format: pct1}
+          - {field: "party:cdu", column: z_cdu, format: pct1}
+          - {field: "party:spd", column: z_spd, format: pct1}
+          - {field: "party:fdp", column: z_fdp, format: pct1}
+          - {field: "party:adf", column: z_adf, format: pct1}
+          - {field: "party:ep", column: z_ep, format: pct1}
+          - {field: "party:fsu", column: z_fsu, format: pct1}
+          - {field: "party:gpd", column: z_gpd, format: pct1}
+          - {field: "party:npd", column: z_npd, format: pct1}
+          - {field: "party:sonstige", column: z_sonst, format: pct1}
+      - role_id: de
+        vote_type: ERSTSTIMME
+        slot: 4
+        kind: difference
+        difference_of: [e69, e65]
+        publish: false
+        fields:
+          - {field: eligible_voters, column: eligible, format: diff}
+          - {field: voters, column: voters, format: diff}
+          - {field: invalid_votes, column: e_invalid, format: diff}
+          - {field: valid_votes, column: e_valid, format: diff}
+          - {field: "party:cdu", column: e_cdu, format: diff}
+          - {field: "party:spd", column: e_spd, format: diff}
+          - {field: "party:fdp", column: e_fdp, format: diff}
+          - {field: "party:adf", column: e_adf, format: diff}
+          - {field: "party:ep", column: e_ep, format: diff}
+          - {field: "party:fsu", column: e_fsu, format: diff}
+          - {field: "party:gpd", column: e_gpd, format: diff}
+          - {field: "party:npd", column: e_npd, format: diff}
+          - {field: "party:einzelbewerber", column: e_einz, format: diff}
+          - {field: "party:sonstige", column: e_sonst, format: diff}
+      - role_id: dz
+        vote_type: ZWEITSTIMME
+        slot: 4
+        kind: difference
+        difference_of: [z69, z65]
+        publish: false
+        fields:
+          - {field: eligible_voters, column: eligible, format: diff}
+          - {field: voters, column: voters, format: diff}
+          - {field: invalid_votes, column: z_invalid, format: diff}
+          - {field: valid_votes, column: z_valid, format: diff}
+          - {field: "party:cdu", column: z_cdu, format: diff}
+          - {field: "party:spd", column: z_spd, format: diff}
+          - {field: "party:fdp", column: z_fdp, format: diff}
+          - {field: "party:adf", column: z_adf, format: diff}
+          - {field: "party:ep", column: z_ep, format: diff}
+          - {field: "party:fsu", column: z_fsu, format: diff}
+          - {field: "party:gpd", column: z_gpd, format: diff}
+          - {field: "party:npd", column: z_npd, format: diff}
+          - {field: "party:sonstige", column: z_sonst, format: diff}
+      - role_id: ce
+        vote_type: ERSTSTIMME
+        slot: 5
+        kind: change
+        change_of: [de, e65]
+        publish: false
+        fields:
+          - {field: eligible_voters, column: eligible, format: chg1}
+          - {field: voters, column: voters, format: chg1}
+          - {field: invalid_votes, column: e_invalid, format: chg1}
+          - {field: valid_votes, column: e_valid, format: chg1}
+          - {field: "party:cdu", column: e_cdu, format: chg1}
+          - {field: "party:spd", column: e_spd, format: chg1}
+          - {field: "party:fdp", column: e_fdp, format: chg1}
+          - {field: "party:adf", column: e_adf, format: chg1}
+          - {field: "party:ep", column: e_ep, format: chg1}
+          - {field: "party:fsu", column: e_fsu, format: chg1}
+          - {field: "party:gpd", column: e_gpd, format: chg1}
+          - {field: "party:npd", column: e_npd, format: chg1}
+          - {field: "party:einzelbewerber", column: e_einz, format: chg1}
+          - {field: "party:sonstige", column: e_sonst, format: chg1}
+      - role_id: cz
+        vote_type: ZWEITSTIMME
+        slot: 5
+        kind: change
+        change_of: [dz, z65]
+        publish: false
+        fields:
+          - {field: eligible_voters, column: eligible, format: chg1}
+          - {field: voters, column: voters, format: chg1}
+          - {field: invalid_votes, column: z_invalid, format: chg1}
+          - {field: valid_votes, column: z_valid, format: chg1}
+          - {field: "party:cdu", column: z_cdu, format: chg1}
+          - {field: "party:spd", column: z_spd, format: chg1}
+          - {field: "party:fdp", column: z_fdp, format: chg1}
+          - {field: "party:adf", column: z_adf, format: chg1}
+          - {field: "party:ep", column: z_ep, format: chg1}
+          - {field: "party:fsu", column: z_fsu, format: chg1}
+          - {field: "party:gpd", column: z_gpd, format: chg1}
+          - {field: "party:npd", column: z_npd, format: chg1}
+          - {field: "party:sonstige", column: z_sonst, format: chg1}
+    percent_definitions:
+      turnout_percent: {numerator: voters, denominator: [eligible_voters]}
+      invalid_votes: {numerator: invalid_votes, denominator: [invalid_votes, valid_votes]}
+      valid_votes: {numerator: valid_votes, denominator: [invalid_votes, valid_votes]}
+      "party:*": {numerator: "party:*", denominator: [valid_votes]}
+    blank_party_cells_zero_with_sum_proof: true
+    label_pattern: '^(?P<index>\d+)\s+[*«»•·]?\s*(?P<name>[^\d\s*«»•·].*?)(?:[\s.·•,:;''`*«»~-]*)$'
+    section_kinds: {}
+    implicit_sections: true
+    total_when_unindexed: true
+    section_total_level: REGIERUNGSBEZIRK
+    grand_total_level: LAND
+    name_matching: ascii_printout
+    wrapped_label_attach: group
+    unit_level_default: WAHLKREIS
+    required_checks: [voters_le_eligible, voters_eq_valid_plus_invalid, party_sum_eq_valid]
+    structure: {columns: header_rules, header_end: rule}
+    variants:
+      - variant_id: wahlkreise
+        pages: "17-25/2"
+        state: Baden-Württemberg
+        columns:
+          - {key: label, role: unit_label, value_type: label, header_aliases: ["Wahlkreis Nr. Name", Wahlkreis]}
+          - {key: year, role: row_marker, value_type: marker, header_aliases: ["Wahljahr Veränderung", Wahljahr, "Veränderung"]}
+          - {key: mandate, role: row_marker, value_type: marker, header_aliases: ["Wahl- Krs. Mandat", Mandat]}
+          - {key: eligible, role: metric, metric: eligible_voters, value_type: integer, header_aliases: ["Wahl- berechtigte"], integer_format: *int, column_number: 1}
+          - {key: voters, role: metric, metric: voters, value_type: integer, header_aliases: ["Wähler"], integer_format: *int, column_number: 2}
+          - {key: e_invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: ["Ungültige"], integer_format: *int, column_number: 3, roles: [e69]}
+          - {key: e_valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: ["Gültige"], integer_format: *int, column_number: 4, roles: [e69]}
+          - {key: e_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: ["CDU"], integer_format: *int, column_number: 5, roles: [e69]}
+          - {key: e_spd, role: party, party_id: spd, value_type: integer, header_aliases: ["SPD"], integer_format: *int, column_number: 6, roles: [e69]}
+          - {key: e_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: ["FDP"], integer_format: *int, column_number: 7, roles: [e69]}
+          - {key: e_adf, role: party, party_id: adf, value_type: integer, header_aliases: ["ADF"], integer_format: *int, column_number: 8, roles: [e69]}
+          - {key: e_ep, role: party, party_id: ep, value_type: integer, header_aliases: ["EP"], integer_format: *int, column_number: 9, roles: [e69]}
+          - {key: e_fsu, role: party, party_id: fsu, value_type: integer, header_aliases: ["FSU"], integer_format: *int, column_number: 10, roles: [e69]}
+          - {key: e_gpd, role: party, party_id: gpd, value_type: integer, header_aliases: ["GPD"], integer_format: *int, column_number: 11, roles: [e69]}
+        continuation:
+          page_offset: 1
+          line_anchor_column: z_valid
+          anchor_confirmation_column: z_invalid
+          index_column: wk_nr
+          columns:
+          - {key: e_npd, role: party, party_id: npd, value_type: integer, header_aliases: ["NPD"], integer_format: *int, column_number: 12, roles: [e69]}
+          - {key: e_einz, role: party, party_id: einzelbewerber, value_type: integer, header_aliases: ["Einz.Bew."], integer_format: *int, column_number: 13, roles: [e69]}
+          - {key: e_sonst, role: party, party_id: sonstige, value_type: integer, header_aliases: ["Sonstige"], integer_format: *int, column_number: 14, roles: [e69]}
+          - {key: z_invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: ["Ungültige"], integer_format: *int, column_number: 15, roles: [z69]}
+          - {key: z_valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: ["Gültige"], integer_format: *int, column_number: 16, roles: [z69]}
+          - {key: z_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: ["CDU"], integer_format: *int, column_number: 17, roles: [z69]}
+          - {key: z_spd, role: party, party_id: spd, value_type: integer, header_aliases: ["SPD"], integer_format: *int, column_number: 18, roles: [z69]}
+          - {key: z_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: ["FDP"], integer_format: *int, column_number: 19, roles: [z69]}
+          - {key: z_adf, role: party, party_id: adf, value_type: integer, header_aliases: ["ADF"], integer_format: *int, column_number: 20, roles: [z69]}
+          - {key: z_ep, role: party, party_id: ep, value_type: integer, header_aliases: ["EP"], integer_format: *int, column_number: 21, roles: [z69]}
+          - {key: z_fsu, role: party, party_id: fsu, value_type: integer, header_aliases: ["FSU"], integer_format: *int, column_number: 22, roles: [z69]}
+          - {key: z_gpd, role: party, party_id: gpd, value_type: integer, header_aliases: ["GPD"], integer_format: *int, column_number: 23, roles: [z69]}
+          - {key: z_npd, role: party, party_id: npd, value_type: integer, header_aliases: ["NPD"], integer_format: *int, column_number: 24, roles: [z69]}
+          - {key: z_sonst, role: party, party_id: sonstige, value_type: integer, header_aliases: ["Sonstige"], integer_format: *int, column_number: 25, roles: [z69]}
+          - {key: wk_nr, role: unit_index, value_type: integer, header_aliases: ["Wahl- kreis Nr."], integer_format: *idx}

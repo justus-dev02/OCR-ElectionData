@@ -1,0 +1,16 @@
+# Technical pipeline settings (NO domain knowledge here - that lives in reference/).
+# Every key is optional; defaults are defined and documented in src/election_ocr/config.py.
+# Environment variables override this file: ELECTION_OCR_<SECTION>__<KEY>=value
+
+render:
+  dpi: 300
+
+ocr:
+  # Two distinct independence groups must read identical values; any dissent -> review.
+  min_independent_sources: 2
+  # Per-engine confidence floors must be calibrated on a signed gold set before use.
+  min_candidate_confidence: {}
+
+publication:
+  require_verified_reference_data: true
+  require_hierarchical_consistency: true

@@ -1,0 +1,51 @@
+election_id: btw_1969
+name: Wahl zum 6. Deutschen Bundestag
+election_type: Bundestagswahl
+election_date: 1969-09-28
+vote_types: [ERSTSTIMME, ZWEITSTIMME]
+verified: false
+sources:
+  - data/166_2611_69001.pdf page 31 table title ("... zum 6. Deutschen Bundestag am 28. September 1969 ...")
+parties:
+  - party_id: cdu
+    display_name: CDU
+    aliases: [CDU]
+    states: [Baden-Württemberg]
+  - party_id: spd
+    display_name: SPD
+    aliases: [SPD]
+    states: [Baden-Württemberg]
+  - party_id: fdp
+    display_name: FDP
+    aliases: [FDP]
+    states: [Baden-Württemberg]
+  - party_id: adf
+    display_name: ADF
+    aliases: [ADF]
+    states: [Baden-Württemberg]
+  - party_id: ep
+    display_name: EP
+    aliases: [EP]
+    states: [Baden-Württemberg]
+  - party_id: fsu
+    display_name: FSU
+    aliases: [FSU]
+    states: [Baden-Württemberg]
+  - party_id: gpd
+    display_name: GPD
+    aliases: [GPD]
+    states: [Baden-Württemberg]
+  - party_id: npd
+    display_name: NPD
+    aliases: [NPD]
+    states: [Baden-Württemberg]
+  - party_id: einzelbewerber
+    display_name: Einz. Bew.
+    aliases: [Einz. Bew.]
+    states: [Baden-Württemberg]
+    note: "Einzelbewerber (independent candidates) - Erststimmen only"
+  - party_id: sonstige
+    display_name: Sonstige
+    aliases: [Sonstige, SONSTIGE]
+    states: [Baden-Württemberg]
+    note: "printed only in the Wahlkreis tables: data/166_2611_69001.pdf Wahlkreis table pp. 17-26 (cols 14 / 25)"

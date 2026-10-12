@@ -1,0 +1,104 @@
+# Canonical parties. Domain reference data - NOT code.
+# verified: false  -> blocks publication until a human has checked the entry.
+parties:
+  - party_id: cdu
+    canonical_name: CDU
+    full_name: Christlich Demokratische Union Deutschlands
+    verified: false
+    source: column headers in data/010_2611_49001.pdf and data/Hessen_Bundestagswahl_Statistik1953.pdf
+  - party_id: spd
+    canonical_name: SPD
+    full_name: Sozialdemokratische Partei Deutschlands
+    verified: false
+    source: column headers in data/010_2611_49001.pdf and data/Hessen_Bundestagswahl_Statistik1953.pdf
+  - party_id: fdp
+    canonical_name: FDP
+    full_name: Freie Demokratische Partei
+    verified: false
+    source: column headers ("FDP/DVP" in 010_2611_49001.pdf, "FDP" in Hessen 1953)
+  - party_id: kpd
+    canonical_name: KPD
+    full_name: Kommunistische Partei Deutschlands
+    verified: false
+    source: column headers in data/010_2611_49001.pdf and data/Hessen_Bundestagswahl_Statistik1953.pdf
+  - party_id: gb_bhe
+    canonical_name: GB/BHE
+    verified: false
+    source: column header "BHE" in data/Hessen_Bundestagswahl_Statistik1953.pdf
+  - party_id: gvp
+    canonical_name: GVP
+    verified: false
+    source: column header "GVP" in data/Hessen_Bundestagswahl_Statistik1953.pdf
+  - party_id: dp
+    canonical_name: DP
+    verified: false
+    source: column header "DP" in data/Hessen_Bundestagswahl_Statistik1953.pdf
+  - party_id: notgemeinschaft
+    canonical_name: Notgemeinschaft
+    verified: false
+    source: column 9 header, Reg.-Bez. Nordwuerttemberg/Nordbaden, data/010_2611_49001.pdf
+  - party_id: evd_szt
+    canonical_name: EVD/SzT
+    verified: false
+    source: column 9 header, Reg.-Bez. Suedbaden/Suedwuerttemberg-Hohenzollern, data/010_2611_49001.pdf
+  - party_id: sonstige
+    canonical_name: Sonstige
+    is_aggregate: true
+    verified: false
+    source: column header "Sonstige" (residual category as printed in the source)
+  # --- added 2026-09-30 for the Baden-Wuerttemberg volumes 1953-1969 (Statistik von Baden-Wuerttemberg
+  #     Bd. 11, 43, 80, 121, 166). Canonical names = abbreviations exactly as printed in the column
+  #     headers; full names deliberately left empty until verified by the project owner.
+  - party_id: dns
+    canonical_name: DNS
+    verified: false
+    source: column header "DNS", data/011_2611_53001.pdf (Gemeindeergebnisse, cols 12 and 23)
+  - party_id: bdd
+    canonical_name: BdD
+    verified: false
+    source: column header "BdD", data/043_2611_57001.pdf (cols 11 and 21)
+  - party_id: dg
+    canonical_name: DG
+    verified: false
+    source: column header "DG", data/043_2611_57001.pdf (cols 12, 22) and data/080_2611_61001.pdf
+  - party_id: drp
+    canonical_name: DRP
+    verified: false
+    source: column header "DRP", data/043_2611_57001.pdf (cols 13, 23) and data/080_2611_61001.pdf
+  - party_id: gdp
+    canonical_name: GDP
+    verified: false
+    source: column header "GDP", data/080_2611_61001.pdf
+  - party_id: dfu
+    canonical_name: DFU
+    verified: false
+    source: column header "DFU", data/080_2611_61001.pdf and data/121_2611_65001.pdf
+  - party_id: aud
+    canonical_name: AUD
+    verified: false
+    source: column header "AUD", data/121_2611_65001.pdf (col 8)
+  - party_id: npd
+    canonical_name: NPD
+    verified: false
+    source: column header "NPD", data/121_2611_65001.pdf (col 10) and data/166_2611_69001.pdf
+  - party_id: fsu
+    canonical_name: FSU
+    verified: false
+    source: column header "FSU", data/121_2611_65001.pdf (col 11) and data/166_2611_69001.pdf
+  - party_id: adf
+    canonical_name: ADF
+    verified: false
+    source: column header "ADF", data/166_2611_69001.pdf
+  - party_id: ep
+    canonical_name: EP
+    verified: false
+    source: column header "EP", data/166_2611_69001.pdf
+  - party_id: gpd
+    canonical_name: GPD
+    verified: false
+    source: column header "GPD", data/166_2611_69001.pdf
+  - party_id: einzelbewerber
+    canonical_name: Einzelbewerber
+    is_aggregate: true
+    verified: false
+    source: column header "Einz. Bew." (Einzelbewerber), data/166_2611_69001.pdf

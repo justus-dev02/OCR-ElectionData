@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Source scans and external data (not redistributed, see README "Data")
+data/*.pdf
+data/external/
+
+# Pipeline outputs, model caches, local work area
+output/
+models/
+.work/
+*.db
+*.sqlite
+*.parquet

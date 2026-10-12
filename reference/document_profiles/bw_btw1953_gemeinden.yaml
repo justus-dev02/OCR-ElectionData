@@ -1,0 +1,201 @@
+# Document profile bound by SHA-256 to data/011_2611_53001.pdf (identical file: data/011_2611_53001-2.pdf)
+# Statistik von Baden-Wuerttemberg, Band 11: "Die Wahl zum zweiten Bundestag ... 6. September 1953",
+# "Gemeindeergebnisse", pages 37-196. Domain data, NOT code. Created 2026-09-30 (visual inspection),
+# verified: false until checked.
+#
+# Layout: every table is printed across a page SPREAD. The odd (left) page carries the municipality label
+# and columns 1-11, the following even (right) page columns 12-24 of the SAME printed lines plus the
+# municipality number (col 25, "Gem. Nr.") repeating the label index. One printed line = one unit with
+# Erststimmen (cols 4-14) and Zweitstimmen (cols 15-24); cols 1-3 are shared by both votes.
+# "Kreis X" lines carry the county totals on the same line (section header with totals).
+document_profile_id: bw_btw1953_gemeinden
+description: Bundestagswahl 1953, Gemeindeergebnisse Baden-Wuerttemberg (Statistik von Baden-Wuerttemberg, Band 11)
+sha256:
+  - c9393589fc2a95b04bc4bea4c5ceda6c813c4dbfa189c7f021f1c3c32fbbd0bd
+verified: false
+sources:
+  - data/011_2611_53001.pdf pages 37-196 (column headers of pages 37/38, section structure; visual inspection 2026-09-30)
+
+x-formats:
+  int: &int {thousands_separators: [" "], dash_means_zero: true}
+  pct: &pct {decimal_separator: ",", decimals: 1, min_value: "0", max_value: "100"}
+
+tables:
+  - table_profile_id: bw53_gemeinde_results
+    election_id: btw_1953
+    description: Page spread (left p = 37, 39, ...; right = p + 1); one line per unit with Erst- and Zweitstimmen.
+    row_mode: single_line
+    line_anchor_column: eligible
+    anchor_confirmation_column: voters
+    roles:
+      - {role_id: erst, vote_type: ERSTSTIMME}
+      - {role_id: zweit, vote_type: ZWEITSTIMME}
+    label_pattern: '^(?P<index>\d+)\s+(?P<name>\S.*)$'
+    section_kinds: {Kreis: LANDKREIS}
+    section_header_has_totals: true
+    structural_headings:
+      Stadtkreise: {unit_level: STADTKREIS}
+      Landkreise: {}
+    wrapped_label_attach: next
+    unit_level_default: GEMEINDE
+    required_checks: [voters_le_eligible, voters_eq_valid_plus_invalid, party_sum_eq_valid, turnout_consistent]
+    structure: {columns: body_rules, header_end: rule}
+    variants:
+      - variant_id: nordwuerttemberg
+        pages: "37-81/2"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Nordwürttemberg}
+        columns: &left53
+          - {key: label, role: unit_label, value_type: label, header_aliases: [Gemeinde]}
+          - {key: eligible, role: metric, metric: eligible_voters, value_type: integer, header_aliases: ["Wahlberechtigte insgesamt"], integer_format: *int, column_number: 1}
+          - {key: voters, role: metric, metric: voters, value_type: integer, header_aliases: ["Zahl der Wähler"], integer_format: *int, column_number: 2}
+          - {key: turnout, role: metric, metric: turnout_percent, value_type: decimal, header_aliases: ["Wahlbeteiligung in vH"], decimal_format: *pct, column_number: 3}
+          - {key: e_invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: [ungültig], integer_format: *int, column_number: 4, roles: [erst]}
+          - {key: e_valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: [gültig], integer_format: *int, column_number: 5, roles: [erst]}
+          - {key: e_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: *int, column_number: 6, roles: [erst]}
+          - {key: e_spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: *int, column_number: 7, roles: [erst]}
+          - {key: e_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP/DVP], integer_format: *int, column_number: 8, roles: [erst]}
+          - {key: e_kpd, role: party, party_id: kpd, value_type: integer, header_aliases: [KPD], integer_format: *int, column_number: 9, roles: [erst]}
+          - {key: e_bhe, role: party, party_id: gb_bhe, value_type: integer, header_aliases: [BHE], integer_format: *int, column_number: 10, roles: [erst]}
+          - {key: e_dp, role: party, party_id: dp, value_type: integer, header_aliases: [DP], integer_format: *int, column_number: 11, roles: [erst]}
+        continuation: &right53
+          page_offset: 1
+          line_anchor_column: z_valid
+          anchor_confirmation_column: z_invalid
+          index_column: gem_nr
+          columns:
+            - {key: e_dns, role: party, party_id: dns, value_type: integer, header_aliases: [DNS], integer_format: *int, column_number: 12, roles: [erst]}
+            - {key: e_gvp, role: party, party_id: gvp, value_type: integer, header_aliases: [GVP], integer_format: *int, column_number: 13, roles: [erst]}
+            - {key: e_sonstige, role: party, party_id: sonstige, value_type: integer, header_aliases: [Sonstige], integer_format: *int, column_number: 14, roles: [erst]}
+            - {key: z_invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: [ungültig], integer_format: *int, column_number: 15, roles: [zweit]}
+            - {key: z_valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: [gültig], integer_format: *int, column_number: 16, roles: [zweit]}
+            - {key: z_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: *int, column_number: 17, roles: [zweit]}
+            - {key: z_spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: *int, column_number: 18, roles: [zweit]}
+            - {key: z_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP/DVP], integer_format: *int, column_number: 19, roles: [zweit]}
+            - {key: z_kpd, role: party, party_id: kpd, value_type: integer, header_aliases: [KPD], integer_format: *int, column_number: 20, roles: [zweit]}
+            - {key: z_bhe, role: party, party_id: gb_bhe, value_type: integer, header_aliases: [BHE], integer_format: *int, column_number: 21, roles: [zweit]}
+            - {key: z_dp, role: party, party_id: dp, value_type: integer, header_aliases: [DP], integer_format: *int, column_number: 22, roles: [zweit]}
+            - {key: z_dns, role: party, party_id: dns, value_type: integer, header_aliases: [DNS], integer_format: *int, column_number: 23, roles: [zweit]}
+            - {key: z_gvp, role: party, party_id: gvp, value_type: integer, header_aliases: [GVP], integer_format: *int, column_number: 24, roles: [zweit]}
+            - {key: gem_nr, role: unit_index, value_type: integer, header_aliases: ["Gem. Nr."], integer_format: {thousands_separators: [], dash_means_zero: false}, column_number: 25}
+      - variant_id: nordbaden
+        pages: "83-105/2"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Nordbaden}
+        columns: *left53
+        continuation: *right53
+      - variant_id: suedbaden
+        pages: "107-151/2"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Südbaden}
+        columns: *left53
+        continuation: *right53
+      - variant_id: suedwuerttemberg_hohenzollern
+        pages: "153-195/2"
+        state: Baden-Württemberg
+        context: {regierungsbezirk: Südwürttemberg-Hohenzollern}
+        columns: *left53
+        continuation: *right53
+
+  # ------------------------------------------------------------------------------------------------
+  # "Ergebnisse in den Wahlkreisen", pages 29-32 (spreads 29/30, 31/32). Same columns as the municipal
+  # table (col 25 = Wahlkreis Nr.); every constituency is printed on TWO lines: absolute numbers and the
+  # party shares ('vH' at the end of the label column). No section headers: a block of constituencies is
+  # closed by its Regierungsbezirk total; 'Land Baden-Wuerttemberg' (a total right after a total) is the
+  # grand total. Winning numbers are underlined (ignored as print marks).
+  - table_profile_id: bw53_wahlkreis_results
+    election_id: btw_1953
+    description: Wahlkreisergebnisse, two lines per constituency (absolute, vH), Reg.-Bez. and Land totals.
+    row_mode: marker_group
+    marker_sequence: [abs, vH]
+    slot_label_markers: {1: vH}
+    group_by: gap
+    line_anchor_column: e_cdu
+    anchor_confirmation_column: e_spd
+    formats:
+      pct1: {value_type: decimal, decimal_format: {decimal_separator: ",", decimals: 1, min_value: "0", max_value: "100"}}
+    roles:
+      - {role_id: erst, vote_type: ERSTSTIMME, slot: 0}
+      - {role_id: zweit, vote_type: ZWEITSTIMME, slot: 0}
+      - role_id: pct_e
+        vote_type: ERSTSTIMME
+        slot: 1
+        kind: percent
+        percent_of: erst
+        publish: false
+        fields:
+          - {field: "party:cdu", column: e_cdu, format: pct1}
+          - {field: "party:spd", column: e_spd, format: pct1}
+          - {field: "party:fdp", column: e_fdp, format: pct1}
+          - {field: "party:kpd", column: e_kpd, format: pct1}
+          - {field: "party:gb_bhe", column: e_bhe, format: pct1}
+          - {field: "party:dp", column: e_dp, format: pct1}
+          - {field: "party:dns", column: e_dns, format: pct1}
+          - {field: "party:gvp", column: e_gvp, format: pct1}
+          - {field: "party:sonstige", column: e_sonstige, format: pct1}
+      - role_id: pct_z
+        vote_type: ZWEITSTIMME
+        slot: 1
+        kind: percent
+        percent_of: zweit
+        publish: false
+        fields:
+          - {field: "party:cdu", column: z_cdu, format: pct1}
+          - {field: "party:spd", column: z_spd, format: pct1}
+          - {field: "party:fdp", column: z_fdp, format: pct1}
+          - {field: "party:kpd", column: z_kpd, format: pct1}
+          - {field: "party:gb_bhe", column: z_bhe, format: pct1}
+          - {field: "party:dp", column: z_dp, format: pct1}
+          - {field: "party:dns", column: z_dns, format: pct1}
+          - {field: "party:gvp", column: z_gvp, format: pct1}
+    percent_definitions:
+      "party:*": {numerator: "party:*", denominator: [valid_votes]}
+    label_pattern: '^(?P<index>\d+)\s+(?P<name>\S.*)$'
+    section_kinds: {Regierungsbezirk: REGIERUNGSBEZIRK}
+    section_footer_has_totals: true
+    implicit_sections: true
+    total_when_unindexed: true
+    section_total_level: REGIERUNGSBEZIRK
+    grand_total_level: LAND
+    wrapped_label_attach: group
+    wrapped_label_max_pitch: 1.2   # 'Regierungsbezirk / Suedwuerttemberg- / Hohenzollern' wraps over 3 lines
+    unit_level_default: WAHLKREIS
+    required_checks: [voters_le_eligible, voters_eq_valid_plus_invalid, party_sum_eq_valid, turnout_consistent]
+    structure: {columns: body_rules, header_end: rule}
+    variants:
+      - variant_id: wahlkreise
+        pages: "29-31/2"
+        state: Baden-Württemberg
+        columns:
+          - {key: label, role: unit_label, value_type: label, header_aliases: [Wahlkreise]}
+          - {key: eligible, role: metric, metric: eligible_voters, value_type: integer, header_aliases: ["Wahlberechtigte insgesamt"], integer_format: *int, column_number: 1}
+          - {key: voters, role: metric, metric: voters, value_type: integer, header_aliases: ["Zahl der Wähler"], integer_format: *int, column_number: 2}
+          - {key: turnout, role: metric, metric: turnout_percent, value_type: decimal, header_aliases: ["Wahlbeteiligung in vH"], decimal_format: *pct, column_number: 3}
+          - {key: e_invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: [ungültig], integer_format: *int, column_number: 4, roles: [erst]}
+          - {key: e_valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: [gültig], integer_format: *int, column_number: 5, roles: [erst]}
+          - {key: e_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: *int, column_number: 6, roles: [erst]}
+          - {key: e_spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: *int, column_number: 7, roles: [erst]}
+          - {key: e_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP/DVP], integer_format: *int, column_number: 8, roles: [erst]}
+          - {key: e_kpd, role: party, party_id: kpd, value_type: integer, header_aliases: [KPD], integer_format: *int, column_number: 9, roles: [erst]}
+          - {key: e_bhe, role: party, party_id: gb_bhe, value_type: integer, header_aliases: [BHE], integer_format: *int, column_number: 10, roles: [erst]}
+          - {key: e_dp, role: party, party_id: dp, value_type: integer, header_aliases: [DP], integer_format: *int, column_number: 11, roles: [erst]}
+        continuation:
+          page_offset: 1
+          line_anchor_column: z_cdu
+          anchor_confirmation_column: z_spd
+          index_column: wk_nr
+          columns:
+            - {key: e_dns, role: party, party_id: dns, value_type: integer, header_aliases: [DNS], integer_format: *int, column_number: 12, roles: [erst]}
+            - {key: e_gvp, role: party, party_id: gvp, value_type: integer, header_aliases: [GVP], integer_format: *int, column_number: 13, roles: [erst]}
+            - {key: e_sonstige, role: party, party_id: sonstige, value_type: integer, header_aliases: [Sonstige], integer_format: *int, column_number: 14, roles: [erst]}
+            - {key: z_invalid, role: metric, metric: invalid_votes, value_type: integer, header_aliases: [ungültig], integer_format: *int, column_number: 15, roles: [zweit]}
+            - {key: z_valid, role: metric, metric: valid_votes, value_type: integer, header_aliases: [gültig], integer_format: *int, column_number: 16, roles: [zweit]}
+            - {key: z_cdu, role: party, party_id: cdu, value_type: integer, header_aliases: [CDU], integer_format: *int, column_number: 17, roles: [zweit]}
+            - {key: z_spd, role: party, party_id: spd, value_type: integer, header_aliases: [SPD], integer_format: *int, column_number: 18, roles: [zweit]}
+            - {key: z_fdp, role: party, party_id: fdp, value_type: integer, header_aliases: [FDP/DVP], integer_format: *int, column_number: 19, roles: [zweit]}
+            - {key: z_kpd, role: party, party_id: kpd, value_type: integer, header_aliases: [KPD], integer_format: *int, column_number: 20, roles: [zweit]}
+            - {key: z_bhe, role: party, party_id: gb_bhe, value_type: integer, header_aliases: [BHE], integer_format: *int, column_number: 21, roles: [zweit]}
+            - {key: z_dp, role: party, party_id: dp, value_type: integer, header_aliases: [DP], integer_format: *int, column_number: 22, roles: [zweit]}
+            - {key: z_dns, role: party, party_id: dns, value_type: integer, header_aliases: [DNS], integer_format: *int, column_number: 23, roles: [zweit]}
+            - {key: z_gvp, role: party, party_id: gvp, value_type: integer, header_aliases: [GVP], integer_format: *int, column_number: 24, roles: [zweit]}
+            - {key: wk_nr, role: unit_index, value_type: integer, header_aliases: ["Wahlkreis Nr."], integer_format: {thousands_separators: [], dash_means_zero: false}, column_number: 25}

@@ -1,0 +1,41 @@
+election_id: btw_1957
+name: Wahl zum 3. Deutschen Bundestag
+election_type: Bundestagswahl
+election_date: 1957-09-15
+vote_types: [ERSTSTIMME, ZWEITSTIMME]
+verified: false
+sources:
+  - data/043_2611_57001.pdf page 4 ("Die Wahl zum dritten Bundestag am 15. September 1957")
+parties:
+  - party_id: cdu
+    display_name: CDU
+    aliases: [CDU]
+    states: [Baden-Württemberg]
+  - party_id: spd
+    display_name: SPD
+    aliases: [SPD]
+    states: [Baden-Württemberg]
+  - party_id: fdp
+    display_name: FDP/DVP
+    aliases: [FDP/DVP]
+    states: [Baden-Württemberg]
+  - party_id: gb_bhe
+    display_name: GB/BHE
+    aliases: [GB/BHE]
+    states: [Baden-Württemberg]
+  - party_id: dp
+    display_name: DP
+    aliases: [DP]
+    states: [Baden-Württemberg]
+  - party_id: bdd
+    display_name: BdD
+    aliases: [BdD]
+    states: [Baden-Württemberg]
+  - party_id: dg
+    display_name: DG
+    aliases: [DG]
+    states: [Baden-Württemberg]
+  - party_id: drp
+    display_name: DRP
+    aliases: [DRP]
+    states: [Baden-Württemberg]

@@ -1,0 +1,37 @@
+election_id: btw_1961
+name: Wahl zum 4. Deutschen Bundestag
+election_type: Bundestagswahl
+election_date: 1961-09-17
+vote_types: [ERSTSTIMME, ZWEITSTIMME]
+verified: false
+sources:
+  - data/080_2611_61001.pdf title page ("Die Wahl zum vierten Deutschen Bundestag 17. September 1961")
+parties:
+  - party_id: cdu
+    display_name: CDU
+    aliases: [CDU]
+    states: [Baden-Württemberg]
+  - party_id: spd
+    display_name: SPD
+    aliases: [SPD]
+    states: [Baden-Württemberg]
+  - party_id: fdp
+    display_name: FDP/DVP
+    aliases: [FDP/DVP]
+    states: [Baden-Württemberg]
+  - party_id: gdp
+    display_name: GDP
+    aliases: [GDP]
+    states: [Baden-Württemberg]
+  - party_id: dfu
+    display_name: DFU
+    aliases: [DFU]
+    states: [Baden-Württemberg]
+  - party_id: dg
+    display_name: DG
+    aliases: [DG]
+    states: [Baden-Württemberg]
+  - party_id: drp
+    display_name: DRP
+    aliases: [DRP]
+    states: [Baden-Württemberg]
