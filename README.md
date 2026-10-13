@@ -11,6 +11,56 @@ arithmetic of its row holds; everything else goes to a human review queue.
 
 **No LLM or VLM is used anywhere in the extraction path** (see [D2](docs/decisions.md#d2---no-llm--vlm-in-the-extraction-path)).
 
+> **Scope.** This repository is a first, self-contained part of a larger effort to digitise
+> historical election data: the Bundestag elections 1949-1969 in Baden-Württemberg and
+> Hessen 1953. The project is being extended continuously (further states, elections and
+> administrative levels).
+
+---
+
+## Example: from scan to verified data
+
+The source volumes are typewritten or line-printed tables of the official final results
+(here: Hessen 1953, page 17 of the volume). Each municipality has three lines: `1` = first vote,
+`2` = second vote, `V` = comparison figures of the 1949 election (read as a cross-check, never
+published, see [D7](docs/decisions.md#d7---printed-shares-and-comparison-lines-are-cross-checks-never-published)).
+
+![Excerpt of a scanned table: Bundestag election 1953, Hessian municipalities](docs/images/scan_excerpt_hessen_1953.png)
+
+What the pipeline extracted from these lines. Both rows passed every data check and are part of
+the provisional export; every value is also **identical to the official file** used for the
+external comparison:
+
+| Municipality | Vote | Eligible | Invalid | Valid | SPD | FDP | CDU | KPD | BHE | GVP | DP | Others |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 15 Elmshausen | 1st | 827 | 46 | 656 | 333 | 97 | 118 | 36 | 67 | 5 | 0 | 0 |
+| 15 Elmshausen | 2nd | 827 | 45 | 657 | 322 | 105 | 120 | 34 | 64 | 8 | 4 | 0 |
+| 16 Erbach | 1st | 197 | 10 | 172 | 19 | 7 | 138 | 2 | 6 | 0 | 0 | 0 |
+| 16 Erbach | 2nd | 197 | 11 | 171 | 18 | 7 | 138 | 2 | 6 | 0 | 0 | 0 |
+
+Printed dashes become 0. The municipality *name* is still stored as the raw engine readings
+(`tesseract: Elmshausen | easyocr: Slmhausen`) because names are only resolved against a
+historical municipality register, which is not part of the repository yet.
+
+More rows, with every column of the export (status, validation tier, source page, name readings,
+run and result id): [`docs/examples/`](docs/examples/) - Hessen 1953 and the 1961 constituency
+results of Baden-Württemberg.
+
+### Per volume
+
+| Volume | Table pages | Numeric cells | Agreed by ≥ 2 OCR engines | Result rows | Rows passing every data check |
+|---|---:|---:|---:|---:|---:|
+| Baden-Württemberg 1949 | 80 | 34,553 | 85.9 % | 3,425 | 638 |
+| Baden-Württemberg 1953 | 82 | 88,494 | 93.2 % | 6,944 | 3,106 |
+| Baden-Württemberg 1957 | 81 | 85,431 | 92.0 % | 6,976 | 2,719 |
+| Baden-Württemberg 1961 | 102 | 73,587 | 87.6 % | 6,864 | 1,296 |
+| Baden-Württemberg 1965 (line printer) | 276 | 95,808 | 82.3 % | 5,640 | 299 |
+| Baden-Württemberg 1969 (line printer) | 258 | 107,870 | 67.2 % | 6,424 | 66 |
+| Hessen 1953 | 128 | 78,444 | 91.8 % | 4,674 | 767 |
+
+The share of fully verified rows falls with print quality: the 1965/1969 volumes are rule-less
+line-printer output with faint glyphs, where a single unreadable cell blocks the whole row.
+
 ---
 
 ## Results
@@ -188,6 +238,9 @@ election-ocr train easyocr --db ... --crops ...            # optional OCR fine-t
 | Beiträge zur Statistik Hessens no. 64 (Bundestag election 1953) | extracted | no |
 | [GPWED](https://github.com/julian-voss/gpwed) state files (`scripts/fetch_gpwed.sh`, pinned commit) | external validation only | no (the repository has no licence) |
 
+The volumes contain the official final results published by the statistical offices; the
+excerpt above is reproduced with source attribution.
+
 ## Project layout
 
 ```
@@ -199,3 +252,16 @@ scripts/                    corpus run, golden-master regression, external data 
 reports/                    generated validation report
 docs/                       architecture and design decisions
 ```
+
+## Roadmap
+
+This is an early, deliberately narrow part of a longer project; it is extended step by step:
+
+* hand-labelled gold set and evaluation of the fine-tuned / self-trained number recogniser
+* historical municipality register, human verification of the reference data, first publication
+* further states and elections (1972 onwards) and further administrative levels
+
+## License
+
+Code and reference data: [Apache License 2.0](LICENSE). The scanned source volumes are not part
+of the repository.
