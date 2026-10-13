@@ -1,5 +1,7 @@
 # Historical Election OCR
 
+[![CI](https://github.com/justus-dev02/OCR-ElectionData/actions/workflows/ci.yml/badge.svg)](https://github.com/justus-dev02/OCR-ElectionData/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 **Verified extraction of 1949-1969 German election results from scanned statistical yearbooks.**
 
 The pipeline reads municipal and constituency results of the Bundestag elections from the
